@@ -1,4 +1,5 @@
-Effective Modern C++ gitbook ÖÐÎÄ·­Òë
+
+Effective Modern C++ gitbook ä¸­æ–‡ç¿»è¯‘
 =====================================
 
 42 SPECIFIC WAYS TO IMPROVE YOUR USE OF C++11 AND C++14
