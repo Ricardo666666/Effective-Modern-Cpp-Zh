@@ -49,3 +49,57 @@ TD<decltype(y)> yType;                  // 包含了x和y的类型
 排除格式的区别，我测试了所有的编译器都会在这种代码的技术中输出有用的错误信息。
 
 ###运行时输出
+
+`printf`到运行的时候可以用来显示类型信息（这并不是我推荐你使用`printf`的原因），但是它提供了对输出格式的完全掌控。挑战就在于你要创造一个你关心的对象的输出的格式控制展示的textual。“这还不容易，”你会这样想，“就是用`typeid`和`std::type_info::name`来救场啊。”在后续的对`x`和`y`的类型推导中，你可以发现你可以这样写：
+
+```cpp
+std::cout << typeid(x).name() << '\n'; // display types for
+std::cout << typeid(y).name() << '\n'; // x and y
+```
+
+这是基于对类似于`x`或者`y`运算`typeid`可以得到一个`std::type_info`对象，`std::type_info`有一个成员函数，`name`可以提供一个C-style的字符串（也就是`const char*`）代表了类型的名字。
+
+调用`std::type_info::name`并不会确定返回有意义的东西，但是实现上是有帮助性质的。帮助是多种多样的。举一个例子，GNU和Clang编译器返回`x`的类型是“`i`”，`y`的类型是“`PKi`”。这些编译器的输出结果你一旦学会就可以理解他们，“`i`”意味着“`int`”，“`PK`”意味着“pointer to ~~konst~~ const”（所有的编译器都支持一个工具，`C++filt`，它可以解析这样的“乱七八糟”的类型。）微软的编译器提供更加直白的输出：“`int`”对`x`，“`int const*`”对`y`。
+
+因为这些结果对`x`和`y`而言都是正确的，你可能认为类型输出的问题就此解决了，但是这并不能轻率。考虑一个更加复杂的例子：
+
+```cpp
+template<typename T>                // template function to
+void f(const T& param);             // be called
+
+std::vector<Widget> createVec();    // 工厂方法
+
+const auto vw = createVec();        // init vw w/factory return
+
+if (!vw.empty()) {
+    f(&vw[0]);                      // 调用f
+    …
+}
+```
+
+在代码中，涉及了一个用户定义的类型（`Widget`），一个STL容器（`std::vector`），一个`auto`变量（`vw`），这对你的编译器的类型推导的可视化是非常具有表现性的。举个例子，想看到模板类型参数`T`和`f`的函数模板参数`param`。
+
+在问题中没有`typeid`是很直接的。在`f`中添加一些代码去展示你想要的类型：
+
+```cpp
+template<typename T>
+void f(const T& param)
+{
+    using std::cout;
+    cout << "T = " << typeid(T).name() << '\n';         // 展示T
+    cout << "param = " << typeid(param).name() << '\n'; // 展示param的类型
+    …
+}
+```
+
+使用GNU和Clang编译器编译会输出如下结果：
+
+    T = PK6Widget
+    param = PK6Widget
+
+我们已经知道对于这些编译器，`PK`意味着“pointer to `const`”，所以比较奇怪的就是数字6，这是在后面跟着的类的名字(`Widget`)的字母字符的长度。所以这些编译器就告我我们`T`和`param`的类型都是`const Widget*`。
+
+微软的编译器输出：
+
+    T = class Widget const *
+    param = class Widget const *
