@@ -75,3 +75,83 @@
 
 此处，`d[5]`返回的是`int&`，但是`authAndAccess`的`auto`返回类型声明将会剥离这个引用，从而得到的返回类型是`int`。`int`作为一个右值成为真正的函数返回类型。上面的代码尝试给一个右值`int`赋值为10。这种行为是在`C++`中被禁止的，所以代码无法编译通过。
 
+为了让`authAndAccess`按照我们的预期工作，我们需要为它的返回值使用`decltype`类型推导，即指定`authAndAccess`要返回的类型正是表达式`c[i]`的返回类型。`C++`的拥护者们预期到在某种情况下有使用`decltype`类型推导规则的需求，并将这个功能在`C++14`中通过`decltype(auto)`实现。这使这对原本的冤家（`decltype`和`auto`）在一起完美地发挥作用：`auto`指定需要推导的类型，`decltype`表明在推导的过程中使用`decltype`推导规则。因此，我们可以重写`authAndAccess`如下：
+
+```cpp
+    template<typename Container, typename Index>  // C++14; works,
+    decltype(auto)                                // but still
+    authAndAccess(Container &c, Index i)          // requires
+    {                                             // refinement
+      authenticateUser();
+      return c[i];
+  }
+```
+
+现在`authAndAccess`的返回类型就是`c[i]`的返回类型。在一般情况下，`c[i]`返回`T&`，`authAndAccess`就返回`T&`，在不常见的情况下，`c[i]`返回一个对象，`authAndAccess`也返回一个对象。
+
+`decltype(auto)`并不仅限使用在函数返回值类型上。当时想对一个表达式使用`decltype`的推导规则时，它也可以很方便的来声明一个变量：
+
+```cpp
+    Widget w;
+    const Widget& cw = w;
+    auto myWidget1 = cw;                     // auto type deduction
+                                             // myWidget1's type is Widget 
+    decltype(auto) myWidget2 = cw            // decltype type deduction:
+                                             // myWidget2's type is
+                                             //  const Widget&
+```
+
+我知道，到目前为止会有两个问题困扰着你。一个是我们前面提到的，对`authAndAccess`的改进。我们在这里讨论。
+
+再次看一下`C++14`版本的`authAndAccess`的声明：
+
+```cpp
+    template<typename Container, typename Index>
+    decltype(auto) anthAndAccess(Container &c, Index i);
+```
+
+这个容器是通过非`const`左值引用传入的，因为通过返回一个容器元素的引用是来修改容器是被允许的。但是这也意味着不可能将右值传入这个函数。右值不能和一个左值引用绑定（除非是`const`的左值引用，这不是这里的情况）。
+
+诚然，传递一个右值容器给`authAndAccess`是一种极端情况。一个右值容器作为一个临时对象，在 `anthAndAccess` 所在语句的最后被销毁，意味着对容器中一个元素的引用（这个引用通常是`authAndAccess`返回的）在创建它的语句结束的地方将被悬空。然而，这对于传给`authAndAccess`一个临时对象是有意义的。一个用户可能仅仅想拷贝一个临时容器中的一个元素，例如：
+
+```cpp
+    std::deque<std::string> makeStringDeque(); // factory function
+    // make copy of 5th element of deque returned
+    // from makeStringDeque
+    auto s = authAndAccess(makeStringDeque(), 5);
+```
+
+支持这样的应用意味着我们需要修改`authAndAccess`的声明来可以接受左值和右值。重载可以解决这个问题（一个重载负责左值引用参数，另外一个负责右值引用参数），但是我们将有两个函数需要维护。避免这种情况的一个方法是使`authAndAccess`有一个既可以绑定左值又可以绑定右值的引用参数，条款24将说明这正是统一引用（`universal reference`）所做的。因此`authAndAccess`可以像如下声明：
+
+```cpp
+    template<typename Container, typename Index>  // c is now a
+    decltype(auto) authAndAccess(Container&& c,   // universal
+                                 Index i);        // reference
+```
+
+在这个模板中，我们不知道我们在操作什么类型的容器，这也意味着我们等同地忽略了它用到的索引对象的类型。对于一个不清楚其类型的对象使用传值传递通常会冒一些风险，比如因为不必要的复制而造成的性能降低，对象切片的行为问题，被同事嘲笑，但是对容器索引的情况，正如一些标准库的索引（`std::string, std::vector, std::deque`的`[]`操作）按值传递看上去是合理的，因此对它们我们仍坚持按值传递。
+
+然而，我们需要更新这个模板的实现，将`std::forward`应用给统一引用，使得它和条款25中的建议是一致的。
+
+```cpp
+    template<typename Container, typename Index>     // final
+    decltype(auto)                                   // C++14
+    authAndAccess(Container&& c, Index i)            // version
+    {
+      authenticateUser();
+      return std::forward<Container>(c)[i];
+    }
+```
+
+这个实现可以做我们期望的任何事情，但是它要求使用支持`C++14`的编译器。如果你没有一个这样的编译器，你可以使用这个模板的`C++11`版本。它出了要你自己必须指定返回类型以外，和对应的`C++14`版本是完全一样的，
+
+```cpp
+    template<typename Container, typename Index>    // final
+    auto                                            // C++11
+    authAndAccess(Container&& c, Index i)           // version
+    -> decltype(std::forward<Container>(c)[i])
+    {
+      authenticateUser();
+      return std::forward<Container>(c)[i];
+    }
+```
