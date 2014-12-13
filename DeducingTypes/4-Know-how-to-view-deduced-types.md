@@ -103,3 +103,48 @@ void f(const T& param)
 
     T = class Widget const *
     param = class Widget const *
+
+三种不同的编译器都产出了相同的建议性信息，这表明信息是准确的。但是更加仔细的分析，在模板`f`中，`param`的类型是`const T&`。`T`和`param`的类型是一样的难道不会感到奇怪吗？举个例子，如果`T`是`int`，`param`的类型应该是`const int&`——根本不是相同的类型。
+
+悲剧的是，`std::type_info::name`的结果并不可靠。在这种情况下，举个例子，所有的三种编译器报告的`param`的类型都是不正确的。更深入的话，它们本来就是不正确的，因为`std::type_info::name`的特化指定了类型会被当做它们被传给模板函数的时候的按值传递的参数。正如条款1所述，这就意味着如果类型是一个引用，他的引用特性会被忽略，如果在忽略引用之后存在`const`（或者`volatile`），它的`const`特性（或者`volatile`特性）会被忽略。这就是为什么`param`的类型——`const Widget * const &`——被报告成了`const Widget*`。首先类型的引用特性被去掉了，然后结果参数指针的`const`特性也被消除了。
+
+同样的悲剧，由IDE编辑器显示的类型信息也并不准确——或者说至少并不可信。对之前的相同的例子，一个我知道的IDE的编辑器报告出`T`的类型（我不打算说）：
+
+```cpp
+const
+std::_Simple_types<std::_Wrap_alloc<std::_Vec_base_types<Widget,
+std::allocator<Widget> >::_Alloc>::value_type>::value_type *
+```
+
+还是这个相同的IDE编辑器，`param`的类型是：
+
+```cpp
+const std::_Simple_types<...>::value_type *const &
+```
+
+这个没有`T`的类型那么吓人，但是中间的“...”会让你感到困惑，直到你发现这是IDE编辑器的一种说辞“我们省略所有`T`类型的部分”。带上一点运气，你的开发环境也许会对这样的代码有着更好的表现。
+
+如果你更加倾向于库而不是运气，你就应该知道`std::type_info::name`可能在IDE中会显示类型失败，但是Boost TypeIndex库（经常写做Boost.TypeIndex）是被设计成可以成功显示的。这个库并不是C++标准的一部分，也不是IDE和模板的一部分。更深层的是，事实上Boost库（在[boost.com](http://boost.com/)）是一个跨平台的，开源的，并且基于一个偏执的团队都比较喜欢的协议。这就意味着基于标准库之上使用Boost库的代码接近于一个跨平台的体验。
+
+这里展示了一段我们使用Boost.TypeIndex的函数`f`精准的输出类型信息：
+
+```cpp
+#include <boost/type_index.hpp>
+template<typename T>
+void f(const T& param)
+{
+    using std::cout;
+    using boost::typeindex::type_id_with_cvr;
+
+    // show T
+    cout << "T = "
+         << type_id_with_cvr<T>().pretty_name()
+         << '\n';
+
+    // show param's type
+    cout << "param = "
+         << type_id_with_cvr<decltype(param)>().pretty_name()
+         << '\n';
+    …
+}
+```
