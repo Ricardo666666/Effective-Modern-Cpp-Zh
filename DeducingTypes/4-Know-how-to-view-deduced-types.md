@@ -148,3 +148,35 @@ void f(const T& param)
     …
 }
 ```
+
+这个模板函数`boost::typeindex::type_id_with_cvr`接受一个类型参数（我们想知道的类型信息）来正常工作，它不会去除`const`，`volatile`或者引用特性（这也就是模板中的“`cvr`”的意思）。返回的结果是个`boost::typeindex::type_index`对象，其中的`pretty_name`成员函数产出一个`std::string`包含一个对人比较友好的类型展示的字符串。
+
+通过这个`f`的实现，再次考虑之前使用`typeid`导致推导出现错误的`param`类型信息：
+
+```cpp
+std::vector<Widget> createVec();    // 工厂方法
+
+const auto vw = createVec();        // init vw w/factory return
+
+if (!vw.empty()) {
+    f(&vw[0]);                      // 调用f
+    …
+}
+```
+
+在GNU和Clang的编译器下面，Boost.TypeIndex输出（准确）的结果：
+
+    T = Widget const*
+    param = Widget const* const&
+
+微软的编译器实际上输出的结果是一样的：
+
+    T = class Widget const *
+    param = class Widget const * const &
+
+这种接近相同的结果很漂亮，但是需要注意IDE编辑器，编译器错误信息，和类似于Boost.TypeIndex的库仅仅是一个对你编译类型推导的一种工具而已。所有的都是有帮助意义的，但是到目前为止，没有什么关于类型推导法则1-3的替代品。
+
+|要记住的东西|
+| :--------- |
+| 类型推导的结果常常可以通过IDE的编辑器，编译器错误输出信息和Boost TypeIndex库的结果中得到|
+| 一些工具的结果不一定有帮助性也不一定准确，所以对C++标准的类型推导法则加以理解是很有必要的|
