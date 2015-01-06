@@ -62,3 +62,26 @@ Widget w2();		//非常的歧义，定义了一个返回Widget对象的w2函数
 ```
 Widget w3{};		//调用Widget无参构造函数
 ```
+使用大括号进行初始化还有很多值得一提的地方。它的语法可以用于广泛的上下文语境之中，它可以防止隐式值转换，而且不会出现C++的二义性。这真实一举三得的好事。那么为什么这一条标题不是叫"优先使用大括号初始化的语法"呢?
+大括号的初始化的缺点是它带来的一些令人意外的行为。这些行为来自使用大括号初始化 std::initializer_lists和重载构造函数的异常纠结的关系中。它们之间的相互关系使得代码开起来做了一样的事，实际上并不是。例如，条目2解释了当使用auto申明的变量使用大括号初始化时，它被推断为std::initializer_list类型，尽管其他的申明具有相同初始化变量的方法使得它的类型更为直观。造成的结果就是，你越喜欢使用auto，你就越没有使用大括号初始化的热情。
+在构造函数调用中，只要不包含std::initializer_list参数列表，大括号和括号意义是一样：
+```
+class Widget{
+public:
+    Widget(int i,bool b);	//构造函数没有声明为std::initializer_list的参数
+    Widget(int i,double d);	
+}；
+Widget w1(10,true);		//调用第一个构造函数
+Widget w2(10,true);		//同样调用第一个构造函数
+Widget w3(10,50);		//调用第二个构造函数
+Widget w4(10,50);		//同样调用第二个构造函数
+```
+但是，如果有一个或多个构造函数的参数类型是std::initializer_list，使用大括号初始化语法会优先调用使用了参数类型std::initializer_list的构造函数。更明确的一点是，只要编译器一旦可以把一个使用大括号初始化解释成调用具有std::initializer_list参数的沟通函数，它一定会这么做。如果上面的Widget类具有一个带有std::initializer_list<long double>参数的构造函数，如下：
+class Widget{
+public:
+   Widget(int i,bool b);	//和上面一样
+   Widget(int i,double d);	//和上面一样
+   Widget(std::initializer_list<long double> il); //新加的构造函数
+   ...
+};
+```
