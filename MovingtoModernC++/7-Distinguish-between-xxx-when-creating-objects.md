@@ -85,3 +85,24 @@ public:
    ...
 };
 ```
+w2和w4将会使新的构造函数创建，即使std::initializer_list参数的构造函数看起来比非std::initializer_list构造函数更难匹配,如下：
+```
+Widget w1(10,true);		//使用括号构造函数
+Widget w2{10,true};		//使用大括号构造函数,调用std::initializer_list参数，10和true被转换成long dobule型
+Widget w3(10,5,0);		//使用括号构造函数
+Widget w4{10,5.0};		//使用大括号，调用std::initializer_list参数，10和5.0被转换为long double
+```
+即使通常复制和移动的构造也会被认为使用std::initializer_list构造函数:
+```
+class Widget{
+public:
+    Widget(int i,bool b);				//同上
+    Widget(int i,double d);				//同上
+    Widget(std::initializer_list<long double> il);	//同上
+
+    operator float() const;				//转换成float型
+    ...
+};
+Widget w5(w4);						//使用括号，调用拷贝构造函数
+Widget w6(w4);						//使用大括号，调用std::initializer_list参数类型构造函数,w4被转换成float，然后再转换成long double
+```
