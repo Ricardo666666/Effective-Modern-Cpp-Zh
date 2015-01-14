@@ -7,7 +7,7 @@
  - [条款3：理解decltype](DeducingTypes/3-Understand-decltype.md)
  - [条款4：知道如何查看类型推导](DeducingTypes/4-Know-how-to-view-deduced-types.md)
 * [第二章 auto关键字](auto/README.md)
- - [条款5：优先使用auto显式类型声明](auto/5-Prefer-auto-to-explicit-type-declarations.md)
+ - [条款5：优先使用auto而非显式类型声明](auto/5-Prefer-auto-to-explicit-type-declarations.md)
  - [条款6：当auto推导出非预期类型时应当使用显式的类型初始化](auto/6-Use-the-explicitly-typed-initializer-idiom-when-auto-deduces-undesired-types.md)
 * [第三章 使用现代C++](MovingtoModernC++/README.md)
  - [条款7：创建对象时区分()和{}](MovingtoModernC++/7-Distinguish-between-xxx-when-creating-objects.md)
