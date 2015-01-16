@@ -105,4 +105,37 @@ public:
 };
 Widget w5(w4);						//使用括号，调用拷贝构造函数
 Widget w6(w4);						//使用大括号，调用std::initializer_list参数类型构造函数,w4被转换成float，然后再转换成long double
+Widget w7(std::move(w4));				//使用括号，调用move构造函数
+Widget w8{std::move(w4)};				//使用大括号，调用std::initializer_list构造函数，和w6原因一样
+```
+编译决定采用std::initializer_lists参数的构造函数意愿强烈，及时这样的调用是不通过的。例如
+```
+class Widget{
+public:
+   Widget(int i,bool b);			//如上
+   Widget(int i,double d);			//如上
+
+   Widget(std::initializer_list<bool> il);	//元素类型是bool
+
+   ...
+};
+Widget w{10,5.0};				//错误，要求类型收窄的转换
+```
+在这里，编译器会忽略前两个构造函数(第二个还是参数完全匹配的)而是试图调用std::initializer_list<bool>参数的构造函数。调用这个构造函数需要将int(10)和double(5.0)转换成bool型。两个转换均会出现类型收窄(bool型不能代表int和double类型)，收窄的类型转换在大括号内初始化是被禁止的，所以这个调用非法的，代码编译不通过。
+只有当无法使用大括号初始化的参数转换成std::initializer_list的时候，编译器才会回来调用正常的构造函数，例如，如果我们将std::initializer_list<std::bool>构造函数替换成std::initializer_list<std::string>，那么非std::initializer_list参数的构造函数称为候选，因为没有办法将int和bool型转换成std::strings:
+```
+class Widget{
+public:
+    Widget(int i,bool b);			//同上
+    Widget(int i,double d);			//同上
+
+    //std::initalizer_list元素类型是std::string
+    Widget(std::initializer_list<std::string> il);//没有隐式转换
+    ...
+    };
+
+    Widget w1(10,true);				//使用括号初始化，调用第一个构造函数
+    Widget w2{10,true};				//使用大括号初始化，调用第一个构造函数
+    Widget w3(10,5.0);				//使用括号初始化，调用第二个构造函数
+    Widget w4{10,5.0};				//使用大括号初始化，调用第二个构造函数
 ```
