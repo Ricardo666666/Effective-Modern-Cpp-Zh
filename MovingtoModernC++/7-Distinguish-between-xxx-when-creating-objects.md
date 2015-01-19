@@ -139,3 +139,22 @@ public:
     Widget w3(10,5.0);				//使用括号初始化，调用第二个构造函数
     Widget w4{10,5.0};				//使用大括号初始化，调用第二个构造函数
 ```
+我们现在已经接近完成探索大括号初始化和重载构造函数，但是有一个有趣的情形值得一提。假设你使用一个空的大括号构造对象，对象同时支持std::initializer_list作为参数的构造函数。空的大括号参数指什么呢？如果表示空的参数，那么你将调用默认构造函数，如果表示空的std::initializer_list，那么调用无实际传入参数std::initializer_list构造函数。
+规则是调用默认构造函数。空的大括号意味着无参数，并不是空的std::initializer_list：
+```
+class Widget{
+public:
+    Widget();					//默认构造函数
+
+    Widget(std::initializer_list<init> il);	//std::initializer_list构造函数
+    ...
+};
+Widget w1;					//调用默认构造函数
+Widget w2{};					//调用默认构造函数
+Widget w3{};					//令人恼火的解析，声明了一个函数！
+```
+如果你想使用空的initializer_list参数来调用std::initializer_list参数的构造函数，你可以使用空的大括号作为参数--把空的大括号放在小括号之中来标定你传递的内容:
+```
+Widget w4({});					//使用空列表作为参数调用std::initializer_list型的构造函数
+Widget w5({});					//如上
+```
