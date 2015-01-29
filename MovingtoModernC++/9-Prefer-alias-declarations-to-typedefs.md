@@ -89,3 +89,43 @@
 
 如果你曾经做过模板元编程（`TMP`），你会强烈地额反对使用模板类型参数并在此基础上修改为其他类型的必要性。例如，给定一个类型`T`，你有可能想剥夺`T`所包含的所有的`const`或引用的修饰符，即你想将`const std::string&`变成`std::string`。你也有可能想给一个类型加上`const`或者将它变成一个左值引用，也就是将`Widget`变成`const Widget`或者`Widget&`。（如果你没有做过`TMP`,这太糟糕了，因为如果你想成为一个真正牛叉的`C++`程序员，你至少需要对`C++`这方面的基本概念足够熟悉。你可以同时看一些TMP的例子，包括我上面提到的类型转换，还有条款23和条款27。）
 
+`C++11`给你提供了工具来完成这类转换的工作，表现的形式是`type traits`,它是`<type_traits>`中的一个模板的分类工具。在这个头文件中有数十个类型特征，但是并不是都可以提供类型转换，不提供转换的也提供了意料之中的接口。给定一个你想竞选类型转换的类型`T`，得到的类型是`std::transformation<T>::type`。例如：
+```cpp
+    std::remove_const<T>::type                 // 从 const T 得到 T
+    std::remove_reference<T>::type             // 从 T& 或 T&& 得到 T
+    std::add_lvalue_reference<T>::type         // 从 T 得到 T&
+```
+注释仅仅总结了这些转换干了什么，因此不需要太咬文嚼字。在一个项目中使用它们之前，我知道你会参考准确的技术规范。
+
+无论如何，我在这里不是只想给你大致介绍一下类型特征。反而是因为注意到，类型转换总是以`::type`作为每次使用的结尾。当你对一个模板中的类型参数（你在实际代码中会经常用到）使用它们时，你必须在每次使用前冠以`typename`。这其中的原因是`C++11`的类型特征是通过内嵌`typedef`到一个模板化的`struct`来实现的。就是这样的，他们就是通过使用类型同义技术来实现的，就是我一直在说服你远不如模板别名的那个技术。
+
+这是一个历史遗留问题，但是我们略过不表（我打赌，这个原因真的很枯燥）。因为标准委员会姗姗来迟地意识到模板别名是一个更好的方式，对于`C++11`的类型转换，委员会使这些模板也成为`C++14`的一部分。别名有一个统一的形式：对于`C++11`中的每个类型转换`std::transformation<T>::type`，有一个对应的`C++14`的模板别名`std::transformation_t`。用例子来说明我的意思：
+```cpp
+	std::remove_const<T>::type                  // C++11: const T -> T
+	std::remove_const_t<T>                      // 等价的C++14
+
+	std::remove_reference<T>::type              // C++11: T&/T&& -> T
+	std::remove_reference_t<T>                  // 等价的C++14
+
+	std::add_lvalue_reference<T>::type          // C++11: T -> T&
+	std::add_lvalue_reference_t<T>              // 等价的C++14
+```
+`C++11`的结构在`C++14`中依然有效，但是我不知道你还有什么理由再用他们。即便你不熟悉`C++14`，自己写一个模板别名也是小儿科。仅仅`C++11`的语言特性被要求，孩子们甚至都可以模拟一个模式，对吗？如果你碰巧有一份`C++14`标准的电子拷贝，这依然很简单，因为需要做的即使一些复制和粘贴操作。在这里，我给你开个头：
+```cpp
+	template<class T>
+	using remove_const_t = typename remove_const<T>::type;
+
+	template<class T>
+	using remove_reference_t = typename remove_reference<T>::type;
+
+	template<class T>
+	using add_lvalue_reference_t = 
+	  typename add_lvalue_reference<T>::type;
+```
+看到没有？不能再简单了。
+
+|要记住的东西|
+|:--------- |
+|`typedef`不支持模板化，但是别名声明支持|
+|模板别名避免了`::type`后缀，在模板中，`typedef`还经常要求使用`typename`前缀|
+|`C++14`为`C++11`中的类型特征转换提供了模板别名|
