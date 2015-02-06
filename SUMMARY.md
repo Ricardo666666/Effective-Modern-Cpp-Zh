@@ -13,7 +13,7 @@
  - [条款7：创建对象时区分()和{}](MovingtoModernC++/7-Distinguish-between-xxx-when-creating-objects.md)
  - [条款8：优先使用nullptr而不是0或者NULL](MovingtoModernC++/8-Prefer-nullptr-to-0-and-NULL.md)
  - [条款9：优先使用声明别名而不是typedef](MovingtoModernC++/9-Prefer-alias-declarations-to-typedefs.md)
- - [条款10：优先使用作用域限制的emus而不是无作用域的enums](MovingtoModernC++/10-Prefer-scoped-enum-to-unscoped-enums.md)
+ - [条款10：优先使用作用域限制的enmu而不是无作用域的enum](MovingtoModernC++/10-Prefer-scoped-enum-to-unscoped-enums.md)
  - [条款11：优先使用delete关键字删除函数而不是使用private限制不实现的函数](MovingtoModernC++/11-Prefer-deleted-functions-to-private-undefined-ones.md)
  - [条款12：使用override关键字声明重载的函数](MovingtoModernC++/12-Declare-overriding-functions-override.md)
  - [条款13：优先使用const_iterator而不是iterator](MovingtoModernC++/13-Prefer-const_iterators-to-iterators.md)
