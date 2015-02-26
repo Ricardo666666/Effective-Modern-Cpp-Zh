@@ -48,3 +48,20 @@
 	if(isLucky(3.5)) ...                  // 我们是否应该在检查它是否幸运之前裁剪为3？
 ```
 如果幸运数字一定要是一个整数，我们希望能到阻止上面那种形式的调用。
+
+完成这个任务的一个方法是为想被排除出去的类型的重载函数声明为删除的：
+```cpp
+	bool isLucky(int number);           // 原本的函数
+
+	bool isLucky(char) = delete;        // 拒绝char类型
+
+	bool isLucky(bool) = delete;        // 拒绝bool类型
+
+	bool isLucky(double) = delete;      // 拒绝double和float类型
+```
+（对`double`的重载的注释写到：`double`和`float`类型都讲被拒绝可能会令你感到吃惊，当时当你回想起来，如果给`float`一个转换为`int`或者`double`的可能性，`C++`总是倾向于转化为`double`的，就不会感到奇怪了。以`float`类型调用`isLucky`总是调用对应的`double`重载，而不是`int`类型的那个重载。结果就是将`double`类型的重载删除将会组织`float`类型的调用编译。）
+
+尽管删除函数不能被使用，但是它们仍然是你程序的一部分。因此，在重载解析的时候仍会将它们考虑进去。这也就是为什么有了上面的那些声明，对`isLucky`不被期望的调用会被拒绝：
+```cpp	
+	if (isLucky('a')) ...               // 错误！调用删除函数
+```
