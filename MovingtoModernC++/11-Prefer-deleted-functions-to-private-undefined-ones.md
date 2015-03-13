@@ -64,4 +64,69 @@
 尽管删除函数不能被使用，但是它们仍然是你程序的一部分。因此，在重载解析的时候仍会将它们考虑进去。这也就是为什么有了上面的那些声明，对`isLucky`不被期望的调用会被拒绝：
 ```cpp	
 	if (isLucky('a')) ...               // 错误！调用删除函数
+
+	if (isLucky(true)) ...              // 错误！
+
+	if (isLucky(3.5f)) ...              // 错误！
 ```
+还有一个删除函数可以完成技巧（而私有成员函数无法完成）是可以阻止那些应该被禁用的模板实现。举个例子，假设你需要使用一个内嵌指针的模板（虽然第4章建议使用智能指针而不是原始的指针）：
+```cpp
+	template<typename T>
+	void processPointer(T* ptr);
+```
+在指针的家族中，有两个特殊的指针。一个是`void*`指针，因为没有办法对它们解引用，递增或者递减它们等操作。另一个是`char*`指针，因为它们往往表示指向`C`类型的字符串，而不是指向独立字符的指针。这些特殊情况经常需要特殊处理，在`processPointer`模板中，假设对这些特殊的指针合适的处理方式拒绝调用。也就是说，不可能以`void*`或者`char*`为参数调用`processPointer`。
+
+这是很容易强迫实现的。仅仅需要删除这些实现：
+```cpp
+	template<>
+	void processPointer<void>(void*) = delete;
+
+	template<>
+	void processPointer<char>(char*) = delete;
+```
+现在，使用`void*`或者`char*`调用`processPointer`是无效的，使用`const void*`或者`const char*`调用也需要是无效的，因此这些实现也需要被删除：
+```cpp
+	template<>
+	void processPointer<const void>(const void*) = delete;
+
+	template<>
+	void processPointer<const char>(const char*) = delete;
+```
+如果你想更彻底一点，你还要删除对`const volatile void*`和`const volatile char*`的重载，你就可以在其他标准的字符类型的指针`std::wchar_t, std::char16_t`和`std::char32_t`上愉快的工作了。
+
+有趣的是，如果你在一个类内部有一个函数模板，你想通过声明它们为私有来禁止某些实现，但是你通过这种方式做不到，因为赋予一个成员函数模板的某种特殊情况下拥有不同于模板主体的访问权限是不可能。举个例子，如果`processPointer`是`Widget`内部的一个成员函数模板，你想禁止使用`void*`指针的调用，下面是一个`C++98`风格的方法，下面代码依然无法通过编译：
+```cpp
+	class Widget{
+	public:
+	  ...
+	  template<typename T>
+	  void processPointer(T* ptr)
+	  { ... }
+
+	private:
+	  template<>                                       // 错误！
+	  void processPointer<void>(void*)
+
+    };
+```
+这里的问题是，模板的特殊情况必须要写在命名空间的作用域内，而不是类的作用域内。这个问题对于删除函数是不存在的，因为它们不再需要一个不同的访问权限。它们可以再类的外面被声明为是被删除的（也就是在命名空间的作用域内）：
+```cpp
+	class Widget{
+	public:
+	  ...
+	  template<typename T>
+	  void processPointer(T* ptr)
+	  { ... }
+	  ...
+
+    };
+
+    template<>                                              // 仍然是公用的，但是已被删除
+    void Widget::processPointer<void>(void*) = delete;
+```
+真相是，`C++98`中声明私有函数但是不定义是想达到`C++11`中删除函数同样效果的尝试。作为一个模仿品，`C++98`的方式并不如它要模仿的东西那么好。它在类的外边和内部都是是无法工作的，当它工作时，知道链接的时候可能又不工作了。所以还是坚持使用删除函数吧。
+
+|要记住的东西|
+|:--------- |
+|优先使用删除函数而不是私有而不定义的函数|
+|任何函数都可以被声明为删除，包括非成员函数和模板实现|
