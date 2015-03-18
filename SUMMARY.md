@@ -15,7 +15,7 @@
  - [条款9：优先使用声明别名而不是typedef](MovingtoModernC++/9-Prefer-alias-declarations-to-typedefs.md)
  - [条款10：优先使用作用域限制的enmu而不是无作用域的enum](MovingtoModernC++/10-Prefer-scoped-enum-to-unscoped-enums.md)
  - [条款11：优先使用delete关键字删除函数而不是private却又不实现的函数](MovingtoModernC++/11-Prefer-deleted-functions-to-private-undefined-ones.md)
- - [条款12：使用override关键字声明重载的函数](MovingtoModernC++/12-Declare-overriding-functions-override.md)
+ - [条款12：使用override关键字声明覆盖的函数](MovingtoModernC++/12-Declare-overriding-functions-override.md)
  - [条款13：优先使用const_iterator而不是iterator](MovingtoModernC++/13-Prefer-const_iterators-to-iterators.md)
  - [条款14：使用noexcept修饰不想抛出异常的函数](MovingtoModernC++/14-Declare-functions-noexcept-if-they-won’t-emit-exceptions.md)
  - [条款15：尽可能的使用constexpr](MovingtoModernC++/15-Use-constexpr-whenever-possible.md)
