@@ -86,3 +86,38 @@
 - `mf2`在`Base`中以`int`为参数，但是在`Derived`中以`unsigned int`为参数
 - `mf3`在`Base`中有左值修饰符，但是在`Derived`中是右值修饰符
 - `mf4`没有继承`Base`中的虚函数
+
+你可能会想，“在实际中，这些代码都会触发编译警告，因此我不需要过度忧虑。”也许的确是这样，但是也有可能不是这样。经过我的检查，发现在两个编译器上，上边的代码被全然接受而没有发出任何警告，在这两个编译器上所有警告是都会被输出的。（其他的编译器输出了这些问题的警告信息，但是输出的信息也不全。）
+
+因为声明派生类的覆盖函数是如此重要，有如此容易出错，所以`C++11`给你提供了一种可以显式的声明一个派生类的函数是要覆盖对应的基类的函数的：声明它为`override`。把这个规则应用到上面的代码得到下面样子的派生类：
+```cpp
+	class Derived: public Base {
+	public:
+	  virtual void mf1() override;
+	  virtual void mf2(unsigned int x) override;
+	  virtual void mf3() && override;
+	  virtual void mf4() const override;
+	};
+```
+这当然是无法通过编译的，因为当你用这种方式写代码的时候，编译器会把覆盖函数所有的问题揭露出来。这正是你想要的，所以你应该把所有覆盖函数声明为`override`。
+
+使用`override`，同时又能通过编译的代码如下（假设目的就是`Derived`类中的所有函数都要覆盖`Base`对应的虚函数）：
+```cpp
+	class Base {
+	public:
+	  virtual void mf1() const;
+	  virtual void mf2(int x);
+	  virtual void mf3() &;
+	  virtual void mf4() const;
+	};
+
+	class Derived: public Base {
+	public:
+	  virtual void mf1() const override;
+	  virtual void mf2(int x) override;
+	  virtual void mf3() & override;
+	  void mf4() const override;                 // 加上"virtual"也可以
+	                                             // 但是不是必须的
+	};
+```
+注意在这个例子中，代码能正常工作的一个基础就是声明`mf4`为`Base`类中的虚函数。绝大部分关于覆盖函数的错误发生在派生类中，但是也有可能在基类中有不正确的代码。
