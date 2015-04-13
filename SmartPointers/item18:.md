@@ -7,36 +7,59 @@ std::unique_ptr的一个常见用法是作为一个工厂函数返回一个继�
 
 [18-1.png]
 
-`class Investment { ... };
-class Stock:  public Investment { ... };class Bond:  public Investment { ... };class RealEstate:  public Investment { ... };`
- 
-生产这种层级对象的工厂函数通常在堆上面分配一个对象并且返回一个指向它的指针。当不再需要使用时，调用者来决定是否删除这个对象。这是一个绝佳的std::unique_ptr的使用场景。因为调用者获得了由工厂函数分配的对象的所有权(并且是独占性的)，而且std::unique_ptr在自己即将被销毁时，自动销毁它所指向的空间。一个为Investment层级对象设计的工厂函数可以声明如下：
-`template<typename... Ts> std::unique_ptr<Investment> makeInvestment(Ts&&... params);// return std::unique_ptr// to an object created// from the given args`
+	class Investment { ... };    
+    class Stock:public Investment { ... };
+    class Bond:public Investment { ... };
+    class RealEstate:public Investment { ... };
+ 
+
+生产这种层级对象的工厂函数通常在堆上面分配一个对象并且返回一个指向它的指针。当不再需要使用时，调用者来决定是否删除这个对象。这是一个绝佳的std::unique_ptr的使用场景。因为调用者获得了由工厂函数分配的对象的所有权(并且是独占性的)，而且std::unique_ptr在自己即将被销毁时，自动销毁它所指向的空间。一个为Investment层级对象设计的工厂函数可以声明如下：
+
+    template<typename... Ts> 
+    std::unique_ptr<Investment> makeInvestment(Ts&&... params);// return std::unique_ptr
+    // to an object created
+    // from the given args`
 
 调用者可以在一处代码块中使用返回的std::unique_ptr:
-{
-	...
-	auto pInvestment = makeInvestment( arguments ); //pInvestment is of type std::unique_ptr<Investment>
-	...
-}//destroy *pInvestment
+
+    {
+	   ...
+	   auto pInvestment = makeInvestment( arguments ); //pInvestment is of type std::unique_ptr<Investment>
+	   ...
+    }//destroy *pInvestment
 
 他们也可以使用在拥有权转移的场景中，例如当工厂函数返回的std::unique_ptr可以移动到一个容器中，这个容器随即被移动到一个对象的数据成员上，该对象随后即被销毁。当该对象被销毁后，该对象的std::unique_ptr数据成员也随即被销毁，它的析构会引发工厂返回的资源被销毁。如果拥有链因为异常或者其他的异常控制流(如，函数过早返回或者for循环中的break语句)中断，最终拥有资源的std::unique_ptr仍会调用它的析构函数(注解：这条规则仍有例外：大多数源自于程序的非正常中断。一个从一个线程主函数(如程序的初始线程的main函数)传递出来的异常，或者一个违背了noexpect规范(请看Item 14)的异常,本地对象不会得到析构，如果std::abort或者其他的exit函数(如std::_Exit, std::exit,或者std::quick_exit)被调用，那么它们肯定不会被析构)，他管理的资源也因此得到释放。
 
 默认情况下，析构函数会使用delete。但是，我们也可以在它的构造过程中指定特定的析构方法(custom deleters):当资源被回收事，传入的特定的析构方法(函数对象，或者是特定的lambda表达式)会被调用。对于我们的例子来说，如果被makeInvestment创建的对象不应该直接被deleted，而是首先要有一条log记录下来，我们就可以这样实现makeInvestment（当你看到意图不是很明显的代码时，请注意看注释）
 
+```cpp
 auto delInvmt = [](Investmeng* pInvestment){
-					makeLogEntry(pInvestment);
-					delete pInvestment;
-				};//custom deleter(a lambda expression)
+	makeLogEntry(pInvestment);
+	delete pInvestment;
+};//custom deleter(a lambda expression)
 template<typename... Ts>
 std::unique_ptr<Investment, decltype(delInvmt)>//revised return type
 makeInvestment(Ts&&... params)
 {
 	std::unique_ptr<Investment, decltype(delInvmt)> pInv(nullptr, delInvmt);//ptr to be returned
-	if ( /* a Stock object should be created */ )     {       pInv.reset(new Stock(std::forward<Ts>(params)...));     }     else if ( /* a Bond object should be created */ )     {       pInv.reset(new Bond(std::forward<Ts>(params)...));     }     else if ( /* a RealEstate object should be created */ )     {       pInv.reset(new RealEstate(std::forward<Ts>(params)...));     }     return pInv;
+	if ( /* a Stock object should be created */ )
+	{
+       pInv.reset(new Stock(std::forward<Ts>(params)...));
+    }
+    else if ( /* a Bond object should be created */ )
+    {
+       pInv.reset(new Bond(std::forward<Ts>(params)...));
+    }
+    else if ( /* a RealEstate object should be created */ )
+    {
+       pInv.reset(new RealEstate(std::forward<Ts>(params)...));
+    }
+    return pInv;
 }
-
+```
 我之前说过，当使用默认的析构方法时(即，delete)，你可以假设std::unique_ptr对象的大小和原生指针一样。当std::unique_ptr用到了自定义的deleter时，情况可就不一样了。函数指针类型的deleter会使得std::unique_ptr的大小增长到一个字节到两个字节。对于deleters是函数对象的std::unique_ptr,大小的改变依赖于函数对象内部要存储多少状态。无状态的函数对象(如，没有captures的lambda expressions) 不会导致额外的大小开销。这就意味着当一个自定义的deleter既可以实现为一个函数对象或者一个无捕获状态的lambda表达式时，lambda是第一优先选择:
+
+```cpp
 auto delInvmt1 = [](Investment* pInvestment)
 				{	
 					makeLogEntry(pInvestment);
@@ -56,7 +79,7 @@ void delInvmt2(Investment* pInvestment)
 template<typename... Ts>
 std::unique_ptr<Investment,(void *)(Investment*)>
 makeInvestment(Ts&&... params);//return type has size of Investment* plus at least size of function pointer!
-
+```
 带有过多状态的函数对象的deleters是使得std::unique_ptr的大小得到显著的增加。如果你发现一个自定义的deleter使得你的std::unique_ptr大到无法接受，请考虑重新改变你的设计。
 
 std::unique_ptr会产生两种格式，一种是独立的对象(std::unique_ptr<T>)，另外一种是数组(std::unique_ptr<T[]>).因此，std::unique_ptr指向的内容从来不会产生任何歧义性。它的API是专门为了你使用的格式来设计的.例如，单对象格式中没有过索引操作符(操作符[]),数组格式则没有解引用操作符(操作符*和操作符->)
