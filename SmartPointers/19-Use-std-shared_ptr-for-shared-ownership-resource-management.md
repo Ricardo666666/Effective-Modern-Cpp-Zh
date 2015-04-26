@@ -57,3 +57,55 @@ std::vector<std::shared_ptr<Widget>> vpw{ pw1, pw2 };
 * `std::make_shared`(请看Item 21)总是会创建一个控制块。它制造了一个新的可以指向的对象，所以可以确定这个新的对象在`std::make_shared`被调用时肯定没有相关的控制块。
 * 当一个`std::shared_ptr`被一个独占性的指针(例如，一个`std::unique_ptr`或者`std::auto_ptr`)构建时，控制块被相应的被创建。独占性的指针并不使用控制块，所以被指向的对象此时还没有控制块相关联。(构造的一个过程是，由`std::shared_ptr`来接管了被指向对象的所有权，所以原来的独占性指针被设置为null).
 * 当一个`std::shared_ptr`被一个原生指针构造时，它也会创建一个控制块。如果你想要基于一个已经有控制块的对象来创建一个`std::shared_ptr`，你可能传递了一个`std::shared_ptr`或者`std::weak_ptr`作为`std::shared_ptr`的构造参数，而不是传递了一个原生指针。`std::shared_ptr`构造函数接受`std::shared_ptr`或者`std::weak_ptr`时，不会创建新的控制块，因为它们(指构造函数)会依赖传递给它们的智能指针是否已经指向了带有控制块的对象的情况。
+
+当使用了一个原生的指针构造多个`std::shared_ptr`时，这些规则的存在会使得被指向的对象包含多个控制块，带来许多负面的未定义行为。多个控制块意味着多个引用计数，多个引用计数意味着对象会被摧毁多次(每次引用计数一次)。这就意味着下面的代码着实糟糕透顶：
+
+```cpp
+auto pw = new Widget;			//pw是一个原生指针
+...
+std::shared_ptr<Widget> spw1(pw, loggingDel);//为*pw创建了一个控制块
+...
+std::shared_ptr<Widget> spw2(pw, loggingDel);//为pw创建了第二个控制块!
+```
+
+创建原生指针pw的行为确实不太好，这样违背了我们一整章背后的建议(请看开章那几段话来复习)。但是先不管这么多，创建pw的那行代码确实不太建议，但是至少它没有产生程序的未定义行为.
+
+现在的情况是，因为spw1的构造函数的参数是一个原生指针，所以它为指向的对象(就是pw指向的对象:`*pw`)创造了一个控制块(伴随着一个引用计数)。到目前为止，代码还没有啥问题。但是随后，spw2也被同一个原生指针作为参数构造,它也为`*pw`创造了一个控制块(还有引用计数).`*pw`因此拥有了两个引用计数。每一个最终都会变成0，最终会引起两次对`*pw`的析构行为。第二次析构就要对未定义的行为负责了。
+
+对于`std::shared_ptr`在这里总结两点.首先，避免给std::shared_ptr构造函数传递原生指针。通常的取代做法是使用std::make_shared(请看Item 21).但是在上面的例子中，我们使用了自定义的deleter,这对于std::make_shared是不可能的。第二，如果你必须要给std::shared_ptr构造函数传递一个原生指针，那么请直接传递new语句，上面代码的第一部分如果被写成下面这样：
+```cpp
+std::shared_ptr<Widget> spw1(new Widget,loggingDel);//direct use of new
+```
+这样就不大可能从同一个原生指针来构造第二个`std::shared_ptr`了。而且，创建spw2的代码作者会用spw1作为初始化(spw2)的参数(即，这样会调用std::shared_ptr的拷贝构造函数)。这样无论如何都不有问题:
+
+```cpp
+std::shared_ptr<Widget> spw2(spw1);//spw2 uses same control block as spw1
+```
+
+使用this指针时，有时也会产生因为使用原生指针作为`std::shared_ptr`构造参数而导致的产生多个控制块的问题。假设我们的程序使用`std::shared_ptr`来管理Widget对象，并且我们使用了一个数据结构来管理跟踪已经处理过的Widget对象：
+
+```cpp
+std::vector<std::shared_ptr<Widget>> processedWidgets;
+```
+进一步假设Widget有一个成员函数来处理:
+
+```cpp
+class Widget{
+public:
+	...
+	void process();
+	...
+};
+```
+这有一个看起来很合理的Widget::process实现
+
+```cpp
+void Widget::process()
+{
+	...						//process the Widget
+	processedWidgets.emplace_back(this);//add it to list
+										//processed Widgets;
+										//this is wrong!	   
+}
+```
+注释里面说这样做错了，指的是传递this指针，并不是因为使用了`emplace_back`(如果你对`emplace_back`不熟悉，请看Item 42.)这样的代码会通过编译，但是给一个`std::shared_ptr`传递this就相当于传递了一个原生指针。所以`std::shared_ptr`会给指向的Widget(*this)创建了一个新的控制块。当你意识到成员函数之外也有`std::shared_ptr`早已指向了Widget，这就粗大事了，同样的道理，会导致发生未定义的行为。
