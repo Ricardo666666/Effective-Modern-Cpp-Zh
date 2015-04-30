@@ -84,20 +84,19 @@ makeInvestment(Ts&&... params);//return type has size of Investment* plus at lea
 
 std::unique_ptr会产生两种格式，一种是独立的对象(std::unique_ptr<T>)，另外一种是数组(std::unique_ptr<T[]>).因此，std::unique_ptr指向的内容从来不会产生任何歧义性。它的API是专门为了你使用的格式来设计的.例如，单对象格式中没有过索引操作符(操作符[]),数组格式则没有解引用操作符(操作符*和操作符->)
 
-std::unique_ptr的数组格式对你来说可能是华而不实的东东，因为和原生的array相比，std::array,std::vector以及std::string几乎是更好的数据结构选择。我所想到的唯一的std::unique_ptr<T[]>有意义的使用场景是，你使用了C-like API来返回一个指向堆内分配的数组的原生指针，而且你像对之接管拥有权。
+`std::unique_ptr`的数组格式对你来说可能是华而不实的东东，因为和原生的array相比，`std::array`,`std::vector`以及`std::string`几乎是更好的数据结构选择。我所想到的唯一的std::unique_ptr<T[]>有意义的使用场景是，你使用了C-like API来返回一个指向堆内分配的数组的原生指针，而且你像对之接管拥有权。
 
-C++11使用std::unique_ptr来表述独占所有权。但是它的一项最引人注目的特性就是它可以轻易且有效的转化为std::shared_ptr:
+C++11使用`std::unique_ptr`来表述独占所有权。但是它的一项最引人注目的特性就是它可以轻易且有效的转化为`std::shared_ptr`:
+
+```cpp
 std::shared_ptr<Investment> sp = makeInvestment(arguments);//converts std::unique_ptr to std::shared_ptr
+```
 
-这就是std::unique_ptr很适合作为工厂函数返回值类型的原因。工厂函数不知道调用者想使用独占性的拥有语义还是共享式的拥有语义(即std::share_ptr).通过返回std::unique_ptr,工厂函数将选择权移交给了调用者,调用者在需要的时候可以将std::unique_ptr转化为它最富有灵活性的兄弟(如果想了解更多关于std::shared_ptr,请移步Item 19)
+这就是`std::unique_ptr`很适合作为工厂函数返回值类型的原因。工厂函数不知道调用者想使用独占性的拥有语义还是共享式的拥有语义(即`std::share_ptr`).通过返回`std::unique_ptr`,工厂函数将选择权移交给了调用者,调用者在需要的时候可以将`std::unique_ptr`转化为它最富有灵活性的兄弟(如果想了解更多关于`std::shared_ptr`,请移步Item 19)
 
-需要铭记的内容
-
-std::unique_ptr是一个具有开销小，速度快，movie-only特定的智能指针，使用独占拥有方式来管理资源。
-
-默认情况下，释放资源由delete来完成，也可以指定自定义的析构函数来替代。但是具有丰富状态的deleters和以函数指针作为deleters增大了std::unique_ptr的存储开销
-
-很容易将一个std::unique_ptr转化为std::shared_ptr
-
-
+|要记住的东西|
+|:--------- |
+|`std::unique_ptr`是一个具有开销小，速度快，`move-only`特定的智能指针，使用独占拥有方式来管理资源。|
+|默认情况下，释放资源由delete来完成，也可以指定自定义的析构函数来替代。但是具有丰富状态的deleters和以函数指针作为deleters增大了`std::unique_ptr`的存储开销|
+|很容易将一个`std::unique_ptr`转化为`std::shared_ptr`|
 

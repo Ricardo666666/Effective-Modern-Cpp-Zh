@@ -109,3 +109,63 @@ void Widget::process()
 }
 ```
 注释里面说这样做错了，指的是传递this指针，并不是因为使用了`emplace_back`(如果你对`emplace_back`不熟悉，请看Item 42.)这样的代码会通过编译，但是给一个`std::shared_ptr`传递this就相当于传递了一个原生指针。所以`std::shared_ptr`会给指向的Widget(*this)创建了一个新的控制块。当你意识到成员函数之外也有`std::shared_ptr`早已指向了Widget，这就粗大事了，同样的道理，会导致发生未定义的行为。
+
+`std::shared_ptr`的API包含了修复这一问题的机制。这可能是C++标准库里面最诡异的方法名字了：`std::enabled_from_this`.它是一个基类的模板，如果你想要使得被std::shared_ptr管理的类安全的以this指针为参数创建一个`std::shared_ptr`,就必须要继承它。在我们的例子中，Widget会以如下方式继承`std::enable_shared_from_this`：
+
+```cpp
+class Widget: public std::enable_shared_from_this<Widget>{
+	public:
+		...
+		void process();
+		...
+};
+```
+正如我之前所说的，`std::enable_shared_from_this`是一个基类模板。它的类型参数永远是它要派生的子类类型，所以widget继承自`std::enable_shared_from_this<widget>`。如果这个子类继承自以子类类型为模板参数的基类的想法让你觉得不可思议，先放一边吧，不要纠结。以上代码是合法的，并且还有相关的设计模式，它有一个非常名字，虽然像`std::enable_shared_from_this`一样古怪,名字叫The Curiously Recurring Template Pattern(CRTP).欲知详情请使用你的搜索引擎。我们下面继续讲`std::enable_shared_from_this`.
+
+`std::enable_shared_from_this`定义了一个成员函数来创建指向当前对象的`std::shared_ptr`,但是它并不重复创建控制块。这个成员函数的名字是`shared_from_this`,当你实现一个成员函数，用来创建一个`std::shared_ptr`来指向this指针指向的对象,可以在其中使用`shared_from_this`。下面是Widget::process的一个安全实现:
+
+```cpp
+void Widget::process()
+{
+	//as before, process the Widget
+	...
+	//add std::shared_ptr to current object to processedWidgets
+	processedWidgets.emplace_back(shared_from_this());
+}
+```
+`shared_from_this`内部实现是，它首先寻找当前对象的控制块，然后创建一个新的`std::shared_ptr`来引用那个控制块。这样的设计依赖一个前提，就是当前的对象必须有一个与之相关的控制块。为了让这种情况成真，事先必须有一个`std::shared_ptr`指向了当前的对象(比如说，在这个调用`shared_from_this`的成员函数的外面)，如果这样的`std::shared_ptr`不存在(即，当前的对象没有相关的控制块)，虽然shared_from_this通常会抛出异常，产生的行为仍是未定义的。
+
+为了阻止用户在没有一个`std::shared_ptr`指向该对象之前，使用一个里面调用`shared_from_this`的成员函数，继承自`std::enable_shared_from_this`的子类通常会把它们的构造函数声明为private,并且让它们的使用者利用返回`std::shared_ptr`的工厂函数来创建对象。举个栗子，对于Widget来说，可以像下面这样写：
+
+```cpp
+class Widget: public std::enable_shared_from_this<Widget>{
+public:
+	//工厂函数转发参数到一个私有的构造函数
+	template<typename... Ts>
+	static std::shared_ptr<Widget> create(Ts&&... params);
+	...
+	void process();			//as before
+	...
+private:
+	...							//构造函数
+}
+```
+直到现在，你可能只能模糊的记得我们关于控制块的讨论源自于想要理解`std::shared_ptr`性能开销的欲望。既然我们已经理解如何避免创造多余的控制块，下面我们回归正题吧。
+
+一个控制块可能只有几个字节大小，尽管自定义的deleters和allocators可能会使得它更大。通常控制块的实现会比你想象中的更复杂。它利用了继承，甚至还用到虚函数(确保指向的对象能正确销毁。)这就意味着使用`std::shared_ptr`会因为控制块使用虚函数而导致一定的机器开销。
+
+当我们读到了动态分配的控制块，任意大小的deleters和allocators,虚函数机制，以及引用计数的原子操纵，你对`std::shared_ptr`的热情可能被泼了一盆冷水，没关系.它做不到对每一种资源管理的问题都是最好的方案。但是相对于它提供的功能，`std::shared_ptr`性能的耗费还是很合理。通常情况下，`std::shared_ptr`被`std::make_shared`所创建，使用默认的deleter和默认的allocator,控制块也只有大概三个字节大小。它的分配基本上是不耗费空间的(它并入了所指向对象的内存分配，欲知详情，请看Item 21.)解引用一个`std::shared_ptr`花费的代价不会比解引用一个原生指针更多。执行一个需要操纵引用计数的过程(例如拷贝构造和拷贝赋值，或者析构)需要一直两个原子操作，但是这些操作通常只会映射到个别的机器指令，尽管相对于普通的非原子指令他们可能更耗时，但它们终究仍是单个的指令。控制块中虚函数的机制在被`std::shared_ptr`管理的对象的生命周期中一般只会被调用一次：当该对象被销毁时。
+
+花费了相对很少的代价，你就获得了对动态分配资源生命周期的自动管理。大多数时间，想要以共享式的方式来管理对象，使用`std::shared_ptr`是一个大多数情况下都比较好的选择。如果你发现自己开始怀疑是否承受得起使用`std::shared_ptr`的代价时，首先请重新考虑是否真的需要使用共享式的管理方法。如果独占式的管理方式可以或者可能实用，`std::unique_ptr`或者是更好的选择。它的性能开销于原生指针大致相同，并且从`std::unique_ptr`“升级”到s`td::shared_ptr`是很简单的，因为`std::shared_ptr`可以从一个`std::unique_ptr`里创建。
+
+反过来可就不一定好用了。如果你把一个资源的生命周期管理交给了`std::shared_ptr`，后面没有办法在变化了。即使引用计数的值是1，为了让`std::unique_ptr`来管理它，你也不能重新声明资源的所有权。资源和指向它的`std::shared_ptr`之间的契约至死方休。不许离婚，取消或者变卦。
+
+还有一件事情`std::shared_ptr`不好用，那就是用在数组上面。可`std::unique_ptr`不同的一点就是，`std::shared_ptr`的API设计为指向单个的对象。没有像`std::shared_ptr<T[]>`这样的用法。经常有一些自作聪明的程序员使用`std::shared_ptr<T>`来指向一个数组,指定了一个自定义的deleter来做数组的删除操作(即delete[]).这样做可以通过编译，但是却是个坏主意，原因有二，首先，`std::shared_ptr`没有重载操作符[],所以如果是通过数组访问需要通过丑陋的基于指针的运算来进行，第二，`std::shared_ptr` supports derived-to-base pointer conversions that make sense for single objects, but that open holes in the type system when applied to arrays. (For this reason, the `std::unique_ptr<T[]>` API prohibits such conversions.)更重要的一点是，鉴于C++11标准给了比原生数组更好的选择(例如，`std::array`,`std::vector`,`std::string`),给数组来声明一个智能指针通常是不当设计的表现。
+
+
+|要记住的东西|
+|:--------- |
+|`std::shared_ptr`为了管理任意资源的共享式内存管理提供了自动垃圾回收的便利|
+|`std::shared_ptr`是`std::unique_ptr`的两倍大，除了控制块，还有需要原子引用计数操作引起的开销|
+|资源的默认析构一般通过delete来进行，但是自定义的deleter也是支持的。deleter的类型对于`std::shared_ptr`的类型不会产生影响|
+|避免从原生指针类型变量创建`std::shared_ptr`|
