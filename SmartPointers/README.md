@@ -1,5 +1,5 @@
 #Charpter4 智能指针
-诗人和作曲家喜欢写一些关于love的作品，也有可能写一些关于计数(counting)的作品,很少有两者兼顾的。总有些例外，如Elizabeth Barrett Browning:"How do I love thee? Let me count the ways",又如Paul Simon:"There must be 50 ways to leave your lover.",被这些诗句启发，我们来尝试列举下为什么原生指针(raw pointer)不那么讨人喜欢(love)的理由:(妈蛋，作者真nm蛋疼)
+诗人和作曲家喜欢写一些关于love的作品，也有可能写一些关于计数(counting)的作品,很少有两者兼顾的。总有些例外，如Elizabeth Barrett Browning:"How do I love thee? Let me count the ways",又如Paul Simon:"There must be 50 ways to leave your lover.",被这些诗句启发，我们来尝试列举下为什么原生指针(raw pointer)不那么讨人喜欢(love)的理由:
 
 1.从它的声明看不出它指向的是一个单个的对象还是一个数组
 
