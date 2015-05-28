@@ -20,3 +20,14 @@ move(T&& param)
 
 函数返回值的"&&"部分表明std::move返回的是一个右值引用。但是呢，正如Item 28条解释的那样，如果T的类型恰好是一个左值引用，T&&的类型就会也会是左值引用。为了阻止这种事情的发生，我们用到了type trait(请看Item 9),在T上面应用std::remove_reference，它的效果就是“去除”T身上的引用，因此保证了"&&"应用到了一个非引用的类型上面。这就确保了std::move真正的返回的是一个右值引用(rvalue reference)，这很重要，因为函数返回的rvalue reference就是右值(rvalue).因此，std::move就做了一件事情：将它的参数转换成了右值(rvalue).
 
+说一句题外话，std::move可以更优雅的在C++14中实现。感谢返回函数类型推导(function return type deduction 请看Item 3),感谢标准库模板别名(alias template)`std::remove_reference_t`(请看Item 9),`std::move`可以这样写：
+
+```cpp
+template<typename T>				//C++14; still in
+decltype(auto) move(T && param)	//namespace std
+{
+	using ReturnType = remove_reference_t<T>&&;
+	return static_cast<ReturnType>(param);
+}
+```
+看起来舒服多了，不是吗？
