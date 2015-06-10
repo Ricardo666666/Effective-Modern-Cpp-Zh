@@ -85,3 +85,71 @@ class string{				//std::string is actually a
 在Annotation的构造函数的成员初始化列表(member initialization list),`std::move(text)`的结果是const std::string的rvalue.这个rvalue不能传递给std::string的move构造函数,因为move构造函数接收的是非const的std::string的rvalue引用。然而，因为lvalue-reference-to-const的参数类型可以被const rvalue匹配上，所以rvalue可以被传递给拷贝构造函数.因此即使text被转换成了rvalue，上文中的成员初始化仍调用了std::string的拷贝构造函数!这样的行为对于保持const的正确性是必须的。从一个对象里move出一个值通常会改变这个对象，所以语言不允许将const对象传递给像move constructor这样的会改变次对象的函数。
 
 从本例中你可以学到两点。首先，如果你想对这些对象执行move操作，就不要把它们声明为const.对const对象的move请求通常会悄悄的执行到copy操作上。
+
+std::forward的情况和std::move类似，但是和std::move__无条件地__将它的参数转化为rvalue不同,std::forward在特定的条件下才会执行转化。std::forward是一个__有条件__的转化。为了理解它何时转化何时不转化，我们来回想一下std::forward的典型的使用场景。最常见的场景是：一个函数模板(function template)接受一个universal reference参数，将它传递给另外一个函数(作参数):
+
+```cpp
+void process(const Widget& lvalArg);	//process lvalues
+void process(Widget&& rvalArg);	//process rvalues
+
+template<typename T>
+void logAndProcess(T&& param)		//template that passes
+										//param to process
+{
+	auto now = std::chrono::system_clock::now(); //get current time
+	makeLogEntry("Calling 'process'", now);
+	process(std::forward<T>(param));
+}
+```
+
+请看下面对logAndProcess的两个调用，一个使用的lvalue,另一个使用的rvalue:
+
+```cpp
+Widget w;
+logAndProcess(w);	//call with lvalue
+logAndProcess(std::move(w));	//call with rvalue
+```
+
+在logAndProcess的实现中，参数param被传递给了函数process.process按照参数类型是lvalue或者rvalue都做了重载。当我们用lvalue调用logAndProcess时，我们自然地期望：forward给process的也是一个lvalue,当我们用rvalue来调用logAndProcess时，我们希望process的rvalue重载版本被调用。
+
+但是就像所有函数的参数一样，param可能是一个lvalue.logAndProcess内的每一个对process的调用因此想要调用process的lvalue重载版本。为了让以上代码的行为表现正确，我们需要一个机制，param转化为rvalue当且仅当：传递给logAndProcess的用来初始化param的参数必须是一个rvalue.这正是std::forward做的事情。这就是为什么std::forward被称作是一个__条件__转化(conditional cast)：当参数被rvalue初始化时，才将参数转化为rvalue.
+
+你可能想知道std::forward怎么知道它的参数是否被一个rvalue初始化。比如说，在以上的代码中，std::forward怎么知道param被一个lvalue或者rvalue初始化？答案很简单，这个信息蕴涵在logAndProcess的模板参数T中。这个参数传递给了std::forward，然后std::forward来从中解码出此信息。欲知详情，请参考Item 28。
+
+std::move和std::forward都可以归之为cast.唯一的一点不同是，std::move总是在执行casts，而std::forward是在某些条件满足时才做。你可能觉得我们不用std::move,只使用std::forward会不会好一些。从一个纯粹是技术的角度来说，答案是肯定的：std::forward是可以都做了，std::move不是必须的。当然，可以说这两个函数都不是必须的，因为我们可以在任何地方都直接写cast代码，但是我希望我们在此达成共识：这样做很恶心。
+
+std::move的魅力在于:方便，减少了错误的概率，而且更加简洁。举个栗子，有这样的一个class,我们想要跟踪，它的move构造函数被调用了多少次，我们这次需要的是一个static的counter，它在每次move构造函数被调用时递增。假设该class还有一个std::string类型的非静态成员，下面是一个实现move constructor(使用std::move)的常见的例子：
+
+```cpp
+class Widget{
+public:
+	Widget(Widget&& rhs)
+	: s(std::move(rhs.s))
+	{ ++moveCtorCalls; }
+	...
+private:
+	static std::size_t moveCtorCalls;
+	std::string s;	
+}
+```
+如果要使用std::forward来实现同样的行为，代码像下面这样写：
+
+```cpp
+class Widget{
+public:
+	Widget(Widget&& rhs)				//unconventional,
+	: s(std::forward<std::string>(rhs.s)) //undesirable
+	{ ++moveCtorCalls; }				//implementation
+	
+	...
+}
+```
+请注意到：首先，std::move只需要一个函数参数(rhs.s), std::forward不只需要一个函数参数(rhs.s),还需要一个模板类型参数(std::string).然后,注意到我们传递给std::forward的类型是非引用类型(non-reference)，因为这就意味着传递的那个参数是一个rvalue（请看Item 28）。综上，这就意味着std::move比std::forward用起来更方便(至少少敲了不少字),免去了让我们传递一个表示函数参数是否是一个rvalue的类型参数。消除了传递错误类型(比如说,传一个std::string&,可以导致数据成员s被拷贝构造，而不是想要的move构造)的可能性。
+
+更重要的是，std::move的使用表明了对rvalue的无条件的转换，然而，当std::forward只对被绑定了rvalue的reference进行转换。这是两个非常不同的行为。std::move就是为了move操作而生，而std::forward,就是将一个对象转发(或者说传递)给另外一个函数，同时保留此对象的左值性或右值性(lvalueness or rvalueness)。所以我们需要这两个不同的函数(并且是不同的函数名字)来区分这两个操作。
+
+|要记住的东西|
+|:--------- |
+|std::move执行一个无条件的对rvalue的转化。对于它自己本身来说，它不会move任何东西|
+|std::forward在参数被绑定为rvalue的情况下才会将它转化为rvalue|
+|std::move和std::forward在runtime时啥都不做|
