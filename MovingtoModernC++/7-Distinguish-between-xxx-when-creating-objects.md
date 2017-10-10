@@ -1,196 +1,220 @@
-Ìõ¿î7:´´½¨¶ÔÏóÊ±Ê¹ÓÃ()ºÍ{}µÄÇø±ð
+æ¡æ¬¾7:åˆ›å»ºå¯¹è±¡æ—¶ä½¿ç”¨()å’Œ{}çš„åŒºåˆ«
 ===============================
-ÔÚC++11ÖÐ£¬Äã¿ÉÒÔÓÐ¶àÖÖÓï·¨Ñ¡ÔñÓÃÒÔ¶ÔÏóµÄ³õÊ¼»¯£¬ÕâÑùµÄÓï·¨ÏÔµÃ»ìÂÒ²»¿°²¢ÈÃÈËÎÞËùÊÊ´Ó£¬À¨ºÅ£¬µÈºÅ£¬´óÀ¨ºÅ¾ù¿ÉÒÔÓÃÀ´½øÐÐ³õÊ¼»¯£º
+åœ¨C++11ä¸­ï¼Œä½ å¯ä»¥æœ‰å¤šç§è¯­æ³•é€‰æ‹©ç”¨ä»¥å¯¹è±¡çš„åˆå§‹åŒ–ï¼Œè¿™æ ·çš„è¯­æ³•æ˜¾å¾—æ··ä¹±ä¸å ªå¹¶è®©äººæ— æ‰€é€‚ä»Žï¼Œ()ï¼Œ=ï¼Œ{}å‡å¯ä»¥ç”¨æ¥è¿›è¡Œåˆå§‹åŒ–ï¼š
 ```
-int x(0);	//Ê¹ÓÃ()½øÐÐ³õÊ¼»¯
-int y = 0;	//Ê¹ÓÃ=½øÐÐ³õÊ¼»¯
-int z{0};	//Ê¹ÓÃ{}½øÐÐ³õÊ¼»¯
+int x(0);	//ä½¿ç”¨()è¿›è¡Œåˆå§‹åŒ–
+int y = 0;	//ä½¿ç”¨=è¿›è¡Œåˆå§‹åŒ–
+int z{0};	//ä½¿ç”¨{}è¿›è¡Œåˆå§‹åŒ–
 ```
-ÔÚºÜ¶àÇé¿öÏÂ£¬¿ÉÒÔÍ¬Ê±Ê¹ÓÃµÈºÅºÍÖÐÀ¨ºÅ
+åœ¨å¾ˆå¤šæƒ…å†µä¸‹ï¼Œå¯ä»¥åŒæ—¶ä½¿ç”¨=å’Œ{}
 ```
-int z = {0};	//Ê¹ÓÃ{}ºÍ=½øÐÐ³õÊ¼»¯
+int z = {0};	//ä½¿ç”¨{}å’Œ=è¿›è¡Œåˆå§‹åŒ–
 ```
-¶ÔÓÚÕâÒ»Ìõ£¬ÎÒÍ¨³£µÄ»áºöÂÔ¡°µÈÓÚ-´óÀ¨ºÅ¡±ÕâÖÖÓï·¨£¬ÒòÎªC++Í¨³£ÈÏÎªËüÖ»ÓÐ´óÀ¨ºÅ¡£
-ÈÏÎªÕâÖÖÓï·¨"»ìÂÒ²»¿°"µÄ±ç»¤ÕßÖ¸³öÊ¹ÓÃµÈºÅÓÃÓÚ³õÊ¼»¯»áÎóµ¼C++µÄ³õÑ§ÕßÈÏÎª¸³Öµ¶¯×÷ÒÑ¾­·¢ÉúÁË£¬¶øÊµ¼ÊÉÏ²¢Ã»ÓÐ¡£¶ÔÓÚÄÚ½¨ÀàÐÍÀýÈçint£¬ÕâÖÖÇø±ðÖ»ÊÇÀíÂÛÉÏµÄ£¬µ«ÊÇ¶ÔÓÚÓÃ»§×Ô¶¨ÒåÀàÐÍ£¬³õÊ¼»¯ºÍ¸³ÖµµÄÇø±ðºÜÖØÒª£¬ÒòÎªÁ½Õßµ÷ÓÃÁË²»Í¬µÄº¯Êý£º
+å¯¹äºŽè¿™ä¸€æ¡ï¼Œæˆ‘é€šå¸¸çš„ä¼šå¿½ç•¥â€œç­‰äºŽ-{}â€è¿™ç§è¯­æ³•ï¼Œå› ä¸ºC++é€šå¸¸è®¤ä¸ºå®ƒåªæœ‰{}ã€‚
+è®¤ä¸ºè¿™ç§è¯­æ³•"æ··ä¹±ä¸å ª"çš„è¾©æŠ¤è€…æŒ‡å‡ºä½¿ç”¨=ç”¨äºŽåˆå§‹åŒ–ä¼šè¯¯å¯¼C++çš„åˆå­¦è€…è®¤ä¸ºèµ‹å€¼åŠ¨ä½œå·²ç»å‘ç”Ÿäº†ï¼Œè€Œå®žé™…ä¸Šå¹¶æ²¡æœ‰ã€‚å¯¹äºŽå†…å»ºç±»åž‹ä¾‹å¦‚intï¼Œè¿™ç§åŒºåˆ«åªæ˜¯ç†è®ºä¸Šçš„ï¼Œä½†æ˜¯å¯¹äºŽç”¨æˆ·è‡ªå®šä¹‰ç±»åž‹ï¼Œåˆå§‹åŒ–å’Œèµ‹å€¼çš„åŒºåˆ«å¾ˆé‡è¦ï¼Œå› ä¸ºä¸¤è€…è°ƒç”¨äº†ä¸åŒçš„å‡½æ•°ï¼š
+
 ```
-Widget w1;	//µ÷ÓÃÁË¹¹Ôìº¯Êý
-Widget w2 = w1;	//²»ÊÇ¸³ÖµÓï¾ä£¬µ÷ÓÃÁË¿½±´¹¹Ôìº¯Êý
-w1 = w2;	//¸³ÖµÓï¾ä£¬µ÷ÓÃÁË=²Ù×÷·û
+Widget w1;	//è°ƒç”¨äº†æž„é€ å‡½æ•°
+Widget w2 = w1;	//ä¸æ˜¯èµ‹å€¼è¯­å¥ï¼Œè°ƒç”¨äº†æ‹·è´æž„é€ å‡½æ•°
+w1 = w2;	//èµ‹å€¼è¯­å¥ï¼Œè°ƒç”¨äº†=æ“ä½œç¬¦
 ```
-¾¡¹ÜÓµÓÐ¶àÖÖ³õÊ¼»¯µÄÓï·¨£¬C++98ÔÚºÜ¶àÇé¿öÏÂÎÞ·¨ÊµÏÖÏëÒªµÄ³õÊ¼»¯¡£ÀýÈç£¬ºÜÄÑÖ±½ÓÅÐ¶Ïµ±Ò»¸öSTLÈÝÆ÷°üº¬Ò»Ð©Öµ¼¯ºÏ(ÀýÈç,1,3,5)µÄÊ±ºòÊÇ·ñÓ¦¸Ã´´½¨¡£
-ÎªÁË½â¾ö¶àÖÖ³õÊ¼»¯Óï·¨³åÍ»µÄÎÊÌâ£¬²¢ÇÒËüÃÇÒ²ÎÞ·¨º­¸ÇËùÓÐµÄ³õÊ¼»¯³¡¾°£¬C++11ÒýÈëÁËÍ³Ò»µÄ³õÊ¼»¯:Ê¹ÓÃµ¥Ò»µÄ³õÊ¼»¯Óï·¨£¬ÀíÂÛÉÏ¿ÉÒÔÔÚÈÎºÎµØ·½±í´ïËùÓÐµÄ³õÊ¼»¯¡£Ëü»ùÓÚ´óÀ¨ºÅ£¬ÕâÒ²ÊÇÎÒÇãÏòÓÚ´óÀ¨ºÅ³õÊ¼»¯µÄÔ­Òò¡£"Í³Ò»µÄ³õÊ¼»¯"ÊÇÒ»¸ö¸ÅÄî£¬"´óÀ¨ºÅ³õÊ¼»¯"ÊÇÒ»¸öÓï·¨ÊµÏÖ¡£
-´óÀ¨ºÅ³õÊ¼»¯Ê¹Äã¿ÉÒÔÊµÏÖÒÔÇ°²»ÄÜ±í´ïµÄº¬Òå¡£Ê¹ÓÃ´óÀ¨ºÅ£¬Ö¸¶¨ÈÝÆ÷³õÊ¼Öµ±äµÃ¼òµ¥:
+
+å°½ç®¡æ‹¥æœ‰å¤šç§åˆå§‹åŒ–çš„è¯­æ³•ï¼ŒC++98åœ¨å¾ˆå¤šæƒ…å†µä¸‹æ— æ³•å®žçŽ°æƒ³è¦çš„åˆå§‹åŒ–ã€‚ä¾‹å¦‚ï¼Œå¾ˆéš¾ç›´æŽ¥åˆ¤æ–­å½“ä¸€ä¸ªSTLå®¹å™¨åŒ…å«ä¸€äº›å€¼é›†åˆ(ä¾‹å¦‚,1,3,5)çš„æ—¶å€™æ˜¯å¦åº”è¯¥åˆ›å»ºã€‚
+ä¸ºäº†è§£å†³å¤šç§åˆå§‹åŒ–è¯­æ³•å†²çªçš„é—®é¢˜ï¼Œå¹¶ä¸”å®ƒä»¬ä¹Ÿæ— æ³•æ¶µç›–æ‰€æœ‰çš„åˆå§‹åŒ–åœºæ™¯ï¼ŒC++11å¼•å…¥äº†ç»Ÿä¸€çš„åˆå§‹åŒ–:ä½¿ç”¨å•ä¸€çš„åˆå§‹åŒ–è¯­æ³•ï¼Œç†è®ºä¸Šå¯ä»¥åœ¨ä»»ä½•åœ°æ–¹è¡¨è¾¾æ‰€æœ‰çš„åˆå§‹åŒ–ã€‚å®ƒåŸºäºŽ{}ï¼Œè¿™ä¹Ÿæ˜¯æˆ‘å€¾å‘äºŽ{}åˆå§‹åŒ–çš„åŽŸå› ã€‚"ç»Ÿä¸€çš„åˆå§‹åŒ–"æ˜¯ä¸€ä¸ªæ¦‚å¿µï¼Œ"{}åˆå§‹åŒ–"æ˜¯ä¸€ä¸ªè¯­æ³•å®žçŽ°ã€‚
+{}åˆå§‹åŒ–ä½¿ä½ å¯ä»¥å®žçŽ°ä»¥å‰ä¸èƒ½è¡¨è¾¾çš„å«ä¹‰ã€‚ä½¿ç”¨{}ï¼ŒæŒ‡å®šå®¹å™¨åˆå§‹å€¼å˜å¾—ç®€å•:
+
 ```
-std::vector<int> v{1,3,5};//vµÄ³õÊ¼ÖµÊÇ1,3,5
+std::vector<int> v{1,3,5};//vçš„åˆå§‹å€¼æ˜¯1,3,5
 ```
-´óÀ¨ºÅÒ²¿ÉÒÔÓÃÀ´Îª·Ç¾²Ì¬Êý¾Ý³ÉÔ±Ö¸¶¨³õÊ¼µÄÄ¬ÈÏÖµ¡£C++11ÖÐµÄÒ»ÏîÐÂÓï·¨ÊÇÖ§³Ö´óÀ¨ºÅÏñ"="Ò»Ñù³õÊ¼»¯£¬µ«ÊÇÀ¨ºÅ²»ÐÐ£º
+
+{}ä¹Ÿå¯ä»¥ç”¨æ¥ä¸ºéžé™æ€æ•°æ®æˆå‘˜æŒ‡å®šåˆå§‹çš„é»˜è®¤å€¼ã€‚C++11ä¸­çš„ä¸€é¡¹æ–°è¯­æ³•æ˜¯æ”¯æŒ{}åƒ"="ä¸€æ ·åˆå§‹åŒ–ï¼Œä½†æ˜¯()ä¸è¡Œï¼š
+
 ```
 class Widget{
    ...
    private:
-	int x{0};	//ÕýÈ·£¬xÄ¬ÈÏÖµÎª0
-	int y = 0;	//ÕýÈ·
-	int z(0);	//´íÎó
+	int x{0};	//æ­£ç¡®ï¼Œxé»˜è®¤å€¼ä¸º0
+	int y = 0;	//æ­£ç¡®
+	int z(0);	//é”™è¯¯
 }
 ```
-ÁíÒ»·½·¨£¬·Ç¿½±´¶ÔÏó(std:atomics-²Î¿¼µÚ40Ìõ)¿ÉÒÔÊ¹ÓÃ´óÀ¨ºÅºÍÀ¨ºÅ³õÊ¼»¯£¬µ«ÊÇ"="²»ÐÐ:
+
+å¦ä¸€æ–¹æ³•ï¼Œéžæ‹·è´å¯¹è±¡(std:atomics-å‚è€ƒç¬¬40æ¡)å¯ä»¥ä½¿ç”¨{}å’Œ()åˆå§‹åŒ–ï¼Œä½†æ˜¯"="ä¸è¡Œ:
 ```
-std::atomic<int> ai1{0};	//ÕýÈ·
-std::atomic<int> ai2(0);	//ÕýÈ·
-std::atomic<int> ai3 = 0;	//´íÎó
+std::atomic<int> ai1{0};	//æ­£ç¡®
+std::atomic<int> ai2(0);	//æ­£ç¡®
+std::atomic<int> ai3 = 0;	//é”™è¯¯
 ```
-Òò´ËºÜÈÝÒ×Àí½âÀ¨ºÅ³õÊ¼»¯±»³ÆÎª±ê×¼¡£ÔÚÈýÖÖÎªC++³õÊ¼»¯Éè¼ÆµÄ±í´ïÊ½ÖÐ£¬Ö»ÓÐÀ¨ºÅ¿ÉÒÔ±»ÓÃÔÚÈÎºÎµØ·½¡£
-À¨ºÅ³õÊ¼»¯µÄÒ»¸öÐÂµÄÌØÐÔÊÇËü½ûÖ¹ÔÚ»ù±¾ÀàÐÍÖÐÊ¹ÓÃÒþÊ½µÄÊýÖµ×ª»»¡£Èç¹ûÒ»¸öÀ¨ºÅÖÐµÄ±í´ïÊ½ºÍ³õÊ¼»¯¶ÔÏóµÄÀàÐÍ²»Ò»ÖÂ£¬´úÂë½«ÎÞ·¨±àÒë£º
+å› æ­¤å¾ˆå®¹æ˜“ç†è§£{}åˆå§‹åŒ–è¢«ç§°ä¸ºæ ‡å‡†ã€‚åœ¨ä¸‰ç§ä¸ºC++åˆå§‹åŒ–è®¾è®¡çš„è¡¨è¾¾å¼ä¸­ï¼Œåªæœ‰{}å¯ä»¥è¢«ç”¨åœ¨ä»»ä½•åœ°æ–¹ã€‚
+{}åˆå§‹åŒ–çš„ä¸€ä¸ªæ–°çš„ç‰¹æ€§æ˜¯å®ƒç¦æ­¢åœ¨åŸºæœ¬ç±»åž‹ä¸­ä½¿ç”¨éšå¼çš„æ•°å€¼è½¬æ¢ã€‚å¦‚æžœä¸€ä¸ª{}ä¸­çš„è¡¨è¾¾å¼å’Œåˆå§‹åŒ–å¯¹è±¡çš„ç±»åž‹ä¸ä¸€è‡´ï¼Œä»£ç å°†æ— æ³•ç¼–è¯‘ï¼š
+
 ```
 double x,y,z;
 ...
-int sum1{x + y + z};	//´íÎó£¬Ë«¾«¶ÈÀàÐÍÊýÖµÏà¼ÓÎÞ·¨±í´ïÎªÕûÐÎ
-Ê¹ÓÃÀ¨ºÅºÍµÈºÅ½øÐÐ³õÊ¼»¯Ê±²»»á½øÐÐÊýÖµ×ª»»£¬ÒòÎªÕâÑù»á¼õÉÙºÜ¶àÈßÓàµÄ´úÂë:
+int sum1{x + y + z};	//é”™è¯¯ï¼ŒåŒç²¾åº¦ç±»åž‹æ•°å€¼ç›¸åŠ æ— æ³•è¡¨è¾¾ä¸ºæ•´å½¢
 ```
-int sum2(x + y + z);	//ÕýÈ·£¬±í´ïÊ½µÄÖµÎª×ª»»³ÉÕûÐÎ
-int sum3 = x + y + z;	//ÈçÉÏ
+
+ä½¿ç”¨()å’Œ=è¿›è¡Œåˆå§‹åŒ–æ—¶ä¼šè¿›è¡Œæ•°å€¼è½¬æ¢ï¼Œå¦åˆ™ä¼šç ´åå¾ˆå¤šC++11ä»¥å‰ç‰ˆæœ¬çš„ä»£ç 
+
 ```
-À¨ºÅ³õÊ¼»¯ÁíÍâÒ»¸öÖµµÃÒ»ÌáµÄÌØµãÊÇËü°ÚÍÑÁËC++µÄÁîÈËÍ·ÌÛµÄÆçÒåÔ­Ôò¡£C++Ô­ÔòµÄÒ»¸ö¸±×÷ÓÃÊÇÈÎºÎµÄ¿ÉÒÔÓÃÀ´ÉêÃ÷µÄ±ØÐë±»½âÊÍ³ÉÎ¨Ò»µÄ£¬¾­³£À§ÈÅ¿ª·¢ÕßµÄÒ»¸öÎÊÌâÊÇËûÃÇÏëÄ¬ÈÏ¹¹ÔìÒ»¸ö¶ÔÏó£¬µ«ÊÇ³£³£×Ô¼ºÉêÃ÷ÁËÒ»¸öÌæ´úËüµÄº¯Êý¡£¸ù±¾µÄÔ­ÒòÊÇÄãÏëµ÷ÓÃÒ»¸ö´ø²ÎÊýµÄ¹¹Ôìº¯Êý£¬Äã¿ÉÒÔÕâÑù×ö£¬
+int sum2(x + y + z);	//æ­£ç¡®ï¼Œè¡¨è¾¾å¼çš„å€¼ä¸ºè½¬æ¢æˆæ•´å½¢
+int sum3 = x + y + z;	//å¦‚ä¸Š
 ```
-Widget w1(10);		//µ÷ÓÃWidgetµÄ¹¹Ôìº¯Êý²¢´«µÝ²ÎÊý10
+
+{}åˆå§‹åŒ–å¦å¤–ä¸€ä¸ªå€¼å¾—ä¸€æçš„ç‰¹ç‚¹æ˜¯å®ƒæ‘†è„±äº†C++çš„ä»¤äººå¤´ç–¼çš„æ­§ä¹‰åŽŸåˆ™ã€‚C++åŽŸåˆ™çš„ä¸€ä¸ªå‰¯ä½œç”¨æ˜¯ä»»ä½•çš„å¯ä»¥ç”¨æ¥å£°æ˜Žçš„å¿…é¡»è¢«è§£é‡Šæˆå”¯ä¸€çš„ï¼Œç»å¸¸å›°æ‰°å¼€å‘è€…çš„ä¸€ä¸ªé—®é¢˜æ˜¯ä»–ä»¬æƒ³é»˜è®¤æž„é€ ä¸€ä¸ªå¯¹è±¡ï¼Œä½†æ˜¯å¸¸å¸¸è‡ªå·±å£°æ˜Žäº†ä¸€ä¸ªæ›¿ä»£å®ƒçš„å‡½æ•°ã€‚
+
+å‡è®¾ä½ æƒ³è°ƒç”¨ä¸€ä¸ªå¸¦å‚æ•°çš„æž„é€ å‡½æ•°ï¼Œä½ å¯ä»¥è¿™æ ·åšï¼Œ
+
 ```
-µ«ÊÇÈç¹ûÄãÏëÊ¹ÓÃÀàËÆÓï·¨µ÷ÓÃÒ»¸öÎÞ²ÎµÄ¹¹Ôìº¯Êý£¬Êµ¼ÊÉÏÄãÉêÃ÷ÁËÒ»¸öº¯Êý£¬¶ø²»ÊÇ¶ÔÏó£º
+Widget w1(10);		//è°ƒç”¨Widgetçš„æž„é€ å‡½æ•°å¹¶ä¼ é€’å‚æ•°10
 ```
-Widget w2();		//·Ç³£µÄÆçÒå£¬¶¨ÒåÁËÒ»¸ö·µ»ØWidget¶ÔÏóµÄw2º¯Êý
+
+ä½†æ˜¯å¦‚æžœä½ æƒ³è°ƒç”¨ä¸€ä¸ªæ— å‚çš„æž„é€ å‡½æ•°ï¼Œå…¶è¯­æ³•ä¸Žå£°æ˜Žæ— å‚å‡½æ•°å®Œå…¨ä¸€è‡´ï¼š
+
 ```
-º¯ÊýÉêÃ÷²»¿ÉÄÜÊ¹ÓÃ´óÀ¨ºÅ´«µÝ²ÎÊýÁÐ±í£¬ËùÓÐÊ¹ÓÃ´óÀ¨ºÅÄ¬ÈÏ¹¹Ôìº¯Êý²»»á´øÀ´Õâ¸öÎÊÌâ£º
+Widget w2();		//éžå¸¸çš„æ­§ä¹‰ï¼Œå®šä¹‰äº†ä¸€ä¸ªè¿”å›žWidgetå¯¹è±¡çš„w2å‡½æ•°
 ```
-Widget w3{};		//µ÷ÓÃWidgetÎÞ²Î¹¹Ôìº¯Êý
+
+å› å‡½æ•°å£°æ˜Žä¸å¯èƒ½ä½¿ç”¨{}ä¼ é€’å‚æ•°åˆ—è¡¨ï¼Œæ‰€ä»¥ä½¿ç”¨{}æ¥è°ƒç”¨æž„é€ å‡½æ•°ä¸ä¼šå¸¦æ¥è¿™ä¸ªé—®é¢˜ï¼š
+
 ```
-Ê¹ÓÃ´óÀ¨ºÅ½øÐÐ³õÊ¼»¯»¹ÓÐºÜ¶àÖµµÃÒ»ÌáµÄµØ·½¡£ËüµÄÓï·¨¿ÉÒÔÓÃÓÚ¹ã·ºµÄÉÏÏÂÎÄÓï¾³Ö®ÖÐ£¬Ëü¿ÉÒÔ·ÀÖ¹ÒþÊ½Öµ×ª»»£¬¶øÇÒ²»»á³öÏÖC++µÄ¶þÒåÐÔ¡£ÕâÕæÊµÒ»¾ÙÈýµÃµÄºÃÊÂ¡£ÄÇÃ´ÎªÊ²Ã´ÕâÒ»Ìõ±êÌâ²»ÊÇ½Ð"ÓÅÏÈÊ¹ÓÃ´óÀ¨ºÅ³õÊ¼»¯µÄÓï·¨"ÄØ?
-´óÀ¨ºÅµÄ³õÊ¼»¯µÄÈ±µãÊÇËü´øÀ´µÄÒ»Ð©ÁîÈËÒâÍâµÄÐÐÎª¡£ÕâÐ©ÐÐÎªÀ´×ÔÊ¹ÓÃ´óÀ¨ºÅ³õÊ¼»¯ std::initializer_listsºÍÖØÔØ¹¹Ôìº¯ÊýµÄÒì³£¾À½áµÄ¹ØÏµÖÐ¡£ËüÃÇÖ®¼äµÄÏà»¥¹ØÏµÊ¹µÃ´úÂë¿ªÆðÀ´×öÁËÒ»ÑùµÄÊÂ£¬Êµ¼ÊÉÏ²¢²»ÊÇ¡£ÀýÈç£¬ÌõÄ¿2½âÊÍÁËµ±Ê¹ÓÃautoÉêÃ÷µÄ±äÁ¿Ê¹ÓÃ´óÀ¨ºÅ³õÊ¼»¯Ê±£¬Ëü±»ÍÆ¶ÏÎªstd::initializer_listÀàÐÍ£¬¾¡¹ÜÆäËûµÄÉêÃ÷¾ßÓÐÏàÍ¬³õÊ¼»¯±äÁ¿µÄ·½·¨Ê¹µÃËüµÄÀàÐÍ¸üÎªÖ±¹Û¡£Ôì³ÉµÄ½á¹û¾ÍÊÇ£¬ÄãÔ½Ï²»¶Ê¹ÓÃauto£¬Äã¾ÍÔ½Ã»ÓÐÊ¹ÓÃ´óÀ¨ºÅ³õÊ¼»¯µÄÈÈÇé¡£
-ÔÚ¹¹Ôìº¯Êýµ÷ÓÃÖÐ£¬Ö»Òª²»°üº¬std::initializer_list²ÎÊýÁÐ±í£¬´óÀ¨ºÅºÍÀ¨ºÅÒâÒåÊÇÒ»Ñù£º
+Widget w3{};		//è°ƒç”¨Widgetæ— å‚æž„é€ å‡½æ•°
+```
+
+ä½¿ç”¨{}è¿›è¡Œåˆå§‹åŒ–è¿˜æœ‰å¾ˆå¤šå€¼å¾—ä¸€æçš„åœ°æ–¹ï¼šå®ƒçš„è¯­æ³•å¯ä»¥ç”¨äºŽå¹¿æ³›çš„ä¸Šä¸‹æ–‡è¯­å¢ƒä¹‹ä¸­ï¼›å®ƒå¯ä»¥é˜²æ­¢éšå¼å€¼è½¬æ¢ï¼Œè€Œä¸”ä¸ä¼šå‡ºçŽ°C++çš„äºŒä¹‰æ€§ã€‚è¿™çœŸå®žä¸€ä¸¾ä¸‰å¾—çš„å¥½äº‹ã€‚é‚£ä¹ˆä¸ºä»€ä¹ˆè¿™ä¸€æ¡æ ‡é¢˜ä¸æ˜¯å«"ä¼˜å…ˆä½¿ç”¨{}åˆå§‹åŒ–çš„è¯­æ³•"å‘¢?
+
+{}çš„åˆå§‹åŒ–çš„ç¼ºç‚¹æ˜¯å®ƒå¸¦æ¥çš„ä¸€äº›ä»¤äººæ„å¤–çš„è¡Œä¸ºã€‚è¿™äº›è¡Œä¸ºæ¥è‡ªä½¿ç”¨{}åˆå§‹åŒ– ```std::initializer_lists``` å’Œé‡è½½æž„é€ å‡½æ•°çš„å¼‚å¸¸çº ç»“çš„å…³ç³»ä¸­ã€‚å®ƒä»¬ä¹‹é—´çš„ç›¸äº’å…³ç³»ä½¿å¾—ä»£ç çœ‹èµ·æ¥åšäº†ä¸€æ ·çš„äº‹ï¼ˆå®žé™…ä¸Šå¹¶ä¸æ˜¯ï¼‰ã€‚ä¾‹å¦‚ï¼Œæ¡ç›®2è§£é‡Šäº†å½“ä½¿ç”¨autoå£°æ˜Žçš„å˜é‡ä½¿ç”¨{}åˆå§‹åŒ–æ—¶ï¼Œå®ƒè¢«æŽ¨æ–­ä¸ºstd::initializer_listç±»åž‹ï¼Œå°½ç®¡å…¶ä»–çš„å£°æ˜Žå…·æœ‰ç›¸åŒåˆå§‹åŒ–å˜é‡çš„æ–¹æ³•ä½¿å¾—å®ƒçš„ç±»åž‹æ›´ä¸ºç›´è§‚ã€‚é€ æˆçš„ç»“æžœå°±æ˜¯ï¼Œä½ è¶Šå–œæ¬¢ä½¿ç”¨autoï¼Œä½ å°±è¶Šæ²¡æœ‰ä½¿ç”¨{}åˆå§‹åŒ–çš„çƒ­æƒ…ã€‚
+åœ¨æž„é€ å‡½æ•°è°ƒç”¨ä¸­ï¼Œåªè¦ä¸åŒ…å«```std::initializer_list```å‚æ•°åˆ—è¡¨ï¼Œ{}å’Œ()æ„ä¹‰æ˜¯ä¸€æ ·ï¼š
 ```
 class Widget{
 public:
-    Widget(int i,bool b);	//¹¹Ôìº¯ÊýÃ»ÓÐÉùÃ÷Îªstd::initializer_listµÄ²ÎÊý
+    Widget(int i,bool b);	//æž„é€ å‡½æ•°æ²¡æœ‰å£°æ˜Žä¸ºstd::initializer_listçš„å‚æ•°
     Widget(int i,double d);	
-}£»
-Widget w1(10,true);		//µ÷ÓÃµÚÒ»¸ö¹¹Ôìº¯Êý
-Widget w2(10,true);		//Í¬Ñùµ÷ÓÃµÚÒ»¸ö¹¹Ôìº¯Êý
-Widget w3(10,50);		//µ÷ÓÃµÚ¶þ¸ö¹¹Ôìº¯Êý
-Widget w4(10,50);		//Í¬Ñùµ÷ÓÃµÚ¶þ¸ö¹¹Ôìº¯Êý
+}ï¼›
+Widget w1(10,true);		//è°ƒç”¨ç¬¬ä¸€ä¸ªæž„é€ å‡½æ•°
+Widget w2{10,true};		//åŒæ ·è°ƒç”¨ç¬¬ä¸€ä¸ªæž„é€ å‡½æ•°
+Widget w3(10,50);		//è°ƒç”¨ç¬¬äºŒä¸ªæž„é€ å‡½æ•°
+Widget w4{10,50};		//åŒæ ·è°ƒç”¨ç¬¬äºŒä¸ªæž„é€ å‡½æ•°
 ```
-µ«ÊÇ£¬Èç¹ûÓÐÒ»¸ö»ò¶à¸ö¹¹Ôìº¯ÊýµÄ²ÎÊýÀàÐÍÊÇstd::initializer_list£¬Ê¹ÓÃ´óÀ¨ºÅ³õÊ¼»¯Óï·¨»áÓÅÏÈµ÷ÓÃÊ¹ÓÃÁË²ÎÊýÀàÐÍstd::initializer_listµÄ¹¹Ôìº¯Êý¡£¸üÃ÷È·µÄÒ»µãÊÇ£¬Ö»Òª±àÒëÆ÷Ò»µ©¿ÉÒÔ°ÑÒ»¸öÊ¹ÓÃ´óÀ¨ºÅ³õÊ¼»¯½âÊÍ³Éµ÷ÓÃ¾ßÓÐstd::initializer_list²ÎÊýµÄ¹µÍ¨º¯Êý£¬ËüÒ»¶¨»áÕâÃ´×ö¡£Èç¹ûÉÏÃæµÄWidgetÀà¾ßÓÐÒ»¸ö´øÓÐstd::initializer_list<long double>²ÎÊýµÄ¹¹Ôìº¯Êý£¬ÈçÏÂ£º
+ä½†æ˜¯ï¼Œå¦‚æžœæœ‰ä¸€ä¸ªæˆ–å¤šä¸ªæž„é€ å‡½æ•°çš„å‚æ•°ç±»åž‹æ˜¯std::initializer_listï¼Œä½¿ç”¨{}åˆå§‹åŒ–è¯­æ³•ä¼šä¼˜å…ˆè°ƒç”¨ä½¿ç”¨äº†å‚æ•°ç±»åž‹std::initializer_listçš„æž„é€ å‡½æ•°ã€‚æ›´æ˜Žç¡®çš„ä¸€ç‚¹æ˜¯ï¼Œåªè¦ç¼–è¯‘å™¨ä¸€æ—¦å¯ä»¥æŠŠä¸€ä¸ªä½¿ç”¨{}åˆå§‹åŒ–è§£é‡Šæˆè°ƒç”¨å…·æœ‰std::initializer_listå‚æ•°çš„æ²Ÿé€šå‡½æ•°ï¼Œå®ƒä¸€å®šä¼šè¿™ä¹ˆåšã€‚å¦‚æžœä¸Šé¢çš„Widgetç±»å…·æœ‰ä¸€ä¸ªå¸¦æœ‰std::initializer_list<long double>å‚æ•°çš„æž„é€ å‡½æ•°ï¼Œå¦‚ä¸‹ï¼š
+
+```
 class Widget{
 public:
-   Widget(int i,bool b);	//ºÍÉÏÃæÒ»Ñù
-   Widget(int i,double d);	//ºÍÉÏÃæÒ»Ñù
-   Widget(std::initializer_list<long double> il); //ÐÂ¼ÓµÄ¹¹Ôìº¯Êý
+   Widget(int i,bool b);	//å’Œä¸Šé¢ä¸€æ ·
+   Widget(int i,double d);	//å’Œä¸Šé¢ä¸€æ ·
+   Widget(std::initializer_list<long double> il); //æ–°åŠ çš„æž„é€ å‡½æ•°
    ...
 };
 ```
-w2ºÍw4½«»áÊ¹ÐÂµÄ¹¹Ôìº¯Êý´´½¨£¬¼´Ê¹std::initializer_list²ÎÊýµÄ¹¹Ôìº¯Êý¿´ÆðÀ´±È·Çstd::initializer_list¹¹Ôìº¯Êý¸üÄÑÆ¥Åä,ÈçÏÂ£º
+
+w2å’Œw4å°†ä¼šä½¿æ–°çš„æž„é€ å‡½æ•°åˆ›å»ºï¼Œå³ä½¿```std::initializer_list```å‚æ•°çš„æž„é€ å‡½æ•°çœ‹èµ·æ¥æ¯”éž```std::initializer_list```æž„é€ å‡½æ•°æ›´éš¾åŒ¹é…,å¦‚ä¸‹ï¼š
+
 ```
-Widget w1(10,true);		//Ê¹ÓÃÀ¨ºÅ¹¹Ôìº¯Êý
-Widget w2{10,true};		//Ê¹ÓÃ´óÀ¨ºÅ¹¹Ôìº¯Êý,µ÷ÓÃstd::initializer_list²ÎÊý£¬10ºÍtrue±»×ª»»³Élong dobuleÐÍ
-Widget w3(10,5,0);		//Ê¹ÓÃÀ¨ºÅ¹¹Ôìº¯Êý
-Widget w4{10,5.0};		//Ê¹ÓÃ´óÀ¨ºÅ£¬µ÷ÓÃstd::initializer_list²ÎÊý£¬10ºÍ5.0±»×ª»»Îªlong double
+Widget w1(10,true);		//ä½¿ç”¨()æž„é€ å‡½æ•°
+Widget w2{10,true};		//ä½¿ç”¨{}æž„é€ å‡½æ•°,è°ƒç”¨std::initializer_listå‚æ•°ï¼Œ10å’Œtrueè¢«è½¬æ¢æˆlong dobuleåž‹
+Widget w3(10,5,0);		//ä½¿ç”¨()æž„é€ å‡½æ•°
+Widget w4{10,5.0};		//ä½¿ç”¨{}ï¼Œè°ƒç”¨std::initializer_listå‚æ•°ï¼Œ10å’Œ5.0è¢«è½¬æ¢ä¸ºlong double
 ```
-¼´Ê¹Í¨³£¸´ÖÆºÍÒÆ¶¯µÄ¹¹ÔìÒ²»á±»ÈÏÎªÊ¹ÓÃstd::initializer_list¹¹Ôìº¯Êý:
+å³ä½¿é€šå¸¸å¤åˆ¶å’Œç§»åŠ¨çš„æž„é€ ä¹Ÿä¼šè¢«è®¤ä¸ºä½¿ç”¨```std::initializer_list```æž„é€ å‡½æ•°:
 ```
 class Widget{
 public:
-    Widget(int i,bool b);				//Í¬ÉÏ
-    Widget(int i,double d);				//Í¬ÉÏ
-    Widget(std::initializer_list<long double> il);	//Í¬ÉÏ
+    Widget(int i,bool b);				//åŒä¸Š
+    Widget(int i,double d);				//åŒä¸Š
+    Widget(std::initializer_list<long double> il);	//åŒä¸Š
 
-    operator float() const;				//×ª»»³ÉfloatÐÍ
+    operator float() const;				//è½¬æ¢æˆfloatåž‹
     ...
 };
-Widget w5(w4);						//Ê¹ÓÃÀ¨ºÅ£¬µ÷ÓÃ¿½±´¹¹Ôìº¯Êý
-Widget w6(w4);						//Ê¹ÓÃ´óÀ¨ºÅ£¬µ÷ÓÃstd::initializer_list²ÎÊýÀàÐÍ¹¹Ôìº¯Êý,w4±»×ª»»³Éfloat£¬È»ºóÔÙ×ª»»³Élong double
-Widget w7(std::move(w4));				//Ê¹ÓÃÀ¨ºÅ£¬µ÷ÓÃmove¹¹Ôìº¯Êý
-Widget w8{std::move(w4)};				//Ê¹ÓÃ´óÀ¨ºÅ£¬µ÷ÓÃstd::initializer_list¹¹Ôìº¯Êý£¬ºÍw6Ô­ÒòÒ»Ñù
+Widget w5(w4);						//ä½¿ç”¨()ï¼Œè°ƒç”¨æ‹·è´æž„é€ å‡½æ•°
+Widget w6{w4};						//ä½¿ç”¨{}ï¼Œè°ƒç”¨std::initializer_listå‚æ•°ç±»åž‹æž„é€ å‡½æ•°,w4è¢«è½¬æ¢æˆfloatï¼Œç„¶åŽå†è½¬æ¢æˆlong double
+Widget w7(std::move(w4));				//ä½¿ç”¨()ï¼Œè°ƒç”¨moveæž„é€ å‡½æ•°
+Widget w8{std::move(w4)};				//ä½¿ç”¨{}ï¼Œè°ƒç”¨std::initializer_listæž„é€ å‡½æ•°ï¼Œå’Œw6åŽŸå› ä¸€æ ·
 ```
-±àÒë¾ö¶¨²ÉÓÃstd::initializer_lists²ÎÊýµÄ¹¹Ôìº¯ÊýÒâÔ¸Ç¿ÁÒ£¬¼°Ê±ÕâÑùµÄµ÷ÓÃÊÇ²»Í¨¹ýµÄ¡£ÀýÈç
+åŒæ ·æƒ…å†µä¸‹ï¼Œç¼–è¯‘å™¨ä¼šä¼˜å…ˆç”¨```std::initializer_lists```æ¥åŒ¹é…ç”¨{}åˆå§‹åŒ–çš„ç‰©ä»¶ï¼Œå“ªæ€•æœ‰æ›´åŠ åŒ¹é…çš„éž```std::initializer_lists```æž„é€ å‡½æ•°å­˜åœ¨ã€‚ä¾‹å¦‚
 ```
 class Widget{
 public:
-   Widget(int i,bool b);			//ÈçÉÏ
-   Widget(int i,double d);			//ÈçÉÏ
+   Widget(int i,bool b);			//å¦‚ä¸Š
+   Widget(int i,double d);			//å¦‚ä¸Š
 
-   Widget(std::initializer_list<bool> il);	//ÔªËØÀàÐÍÊÇbool
+   Widget(std::initializer_list<bool> il);	//å…ƒç´ ç±»åž‹æ˜¯bool
 
    ...
 };
-Widget w{10,5.0};				//´íÎó£¬ÒªÇóÀàÐÍÊÕÕ­µÄ×ª»»
+Widget w{10,5.0};				//é”™è¯¯ï¼Œè¦æ±‚ç±»åž‹æ”¶çª„çš„è½¬æ¢
 ```
-ÔÚÕâÀï£¬±àÒëÆ÷»áºöÂÔÇ°Á½¸ö¹¹Ôìº¯Êý(µÚ¶þ¸ö»¹ÊÇ²ÎÊýÍêÈ«Æ¥ÅäµÄ)¶øÊÇÊÔÍ¼µ÷ÓÃstd::initializer_list<bool>²ÎÊýµÄ¹¹Ôìº¯Êý¡£µ÷ÓÃÕâ¸ö¹¹Ôìº¯ÊýÐèÒª½«int(10)ºÍdouble(5.0)×ª»»³ÉboolÐÍ¡£Á½¸ö×ª»»¾ù»á³öÏÖÀàÐÍÊÕÕ­(boolÐÍ²»ÄÜ´ú±íintºÍdoubleÀàÐÍ)£¬ÊÕÕ­µÄÀàÐÍ×ª»»ÔÚ´óÀ¨ºÅÄÚ³õÊ¼»¯ÊÇ±»½ûÖ¹µÄ£¬ËùÒÔÕâ¸öµ÷ÓÃ·Ç·¨µÄ£¬´úÂë±àÒë²»Í¨¹ý¡£
-Ö»ÓÐµ±ÎÞ·¨Ê¹ÓÃ´óÀ¨ºÅ³õÊ¼»¯µÄ²ÎÊý×ª»»³Éstd::initializer_listµÄÊ±ºò£¬±àÒëÆ÷²Å»á»ØÀ´µ÷ÓÃÕý³£µÄ¹¹Ôìº¯Êý£¬ÀýÈç£¬Èç¹ûÎÒÃÇ½«std::initializer_list<std::bool>¹¹Ôìº¯ÊýÌæ»»³Éstd::initializer_list<std::string>£¬ÄÇÃ´·Çstd::initializer_list²ÎÊýµÄ¹¹Ôìº¯Êý³ÆÎªºòÑ¡£¬ÒòÎªÃ»ÓÐ°ì·¨½«intºÍboolÐÍ×ª»»³Éstd::strings:
+åœ¨è¿™é‡Œï¼Œç¼–è¯‘å™¨ä¼šå¿½ç•¥å‰ä¸¤ä¸ªæž„é€ å‡½æ•°(ç¬¬äºŒä¸ªè¿˜æ˜¯å‚æ•°å®Œå…¨åŒ¹é…çš„)è€Œæ˜¯è¯•å›¾è°ƒç”¨std::initializer_list<bool>å‚æ•°çš„æž„é€ å‡½æ•°ã€‚è°ƒç”¨è¿™ä¸ªæž„é€ å‡½æ•°éœ€è¦å°†int(10)å’Œdouble(5.0)è½¬æ¢æˆboolåž‹ã€‚ä¸¤ä¸ªè½¬æ¢å‡ä¼šå‡ºçŽ°ç±»åž‹æ”¶çª„(boolåž‹ä¸èƒ½ä»£è¡¨intå’Œdoubleç±»åž‹)ï¼Œæ”¶çª„çš„ç±»åž‹è½¬æ¢åœ¨{}å†…åˆå§‹åŒ–æ˜¯è¢«ç¦æ­¢çš„ï¼Œæ‰€ä»¥è¿™ä¸ªè°ƒç”¨éžæ³•çš„ï¼Œä»£ç ç¼–è¯‘ä¸é€šè¿‡ã€‚
+åªæœ‰å½“æ— æ³•ä½¿ç”¨{}åˆå§‹åŒ–çš„å‚æ•°è½¬æ¢æˆstd::initializer_listçš„æ—¶å€™ï¼Œç¼–è¯‘å™¨æ‰ä¼šå›žæ¥è°ƒç”¨æ­£å¸¸çš„æž„é€ å‡½æ•°ï¼Œä¾‹å¦‚ï¼Œå¦‚æžœæˆ‘ä»¬å°†std::initializer_list<std::bool>æž„é€ å‡½æ•°æ›¿æ¢æˆstd::initializer_list<std::string>ï¼Œé‚£ä¹ˆéžstd::initializer_listå‚æ•°çš„æž„é€ å‡½æ•°ç§°ä¸ºå€™é€‰ï¼Œå› ä¸ºæ²¡æœ‰åŠžæ³•å°†intå’Œboolåž‹è½¬æ¢æˆstd::strings:
 ```
 class Widget{
 public:
-    Widget(int i,bool b);			//Í¬ÉÏ
-    Widget(int i,double d);			//Í¬ÉÏ
+    Widget(int i,bool b);			//åŒä¸Š
+    Widget(int i,double d);			//åŒä¸Š
 
-    //std::initalizer_listÔªËØÀàÐÍÊÇstd::string
-    Widget(std::initializer_list<std::string> il);//Ã»ÓÐÒþÊ½×ª»»
+    //std::initalizer_listå…ƒç´ ç±»åž‹æ˜¯std::string
+    Widget(std::initializer_list<std::string> il);//æ²¡æœ‰éšå¼è½¬æ¢
     ...
     };
 
-    Widget w1(10,true);				//Ê¹ÓÃÀ¨ºÅ³õÊ¼»¯£¬µ÷ÓÃµÚÒ»¸ö¹¹Ôìº¯Êý
-    Widget w2{10,true};				//Ê¹ÓÃ´óÀ¨ºÅ³õÊ¼»¯£¬µ÷ÓÃµÚÒ»¸ö¹¹Ôìº¯Êý
-    Widget w3(10,5.0);				//Ê¹ÓÃÀ¨ºÅ³õÊ¼»¯£¬µ÷ÓÃµÚ¶þ¸ö¹¹Ôìº¯Êý
-    Widget w4{10,5.0};				//Ê¹ÓÃ´óÀ¨ºÅ³õÊ¼»¯£¬µ÷ÓÃµÚ¶þ¸ö¹¹Ôìº¯Êý
+    Widget w1(10,true);				//ä½¿ç”¨()åˆå§‹åŒ–ï¼Œè°ƒç”¨ç¬¬ä¸€ä¸ªæž„é€ å‡½æ•°
+    Widget w2{10,true};				//ä½¿ç”¨{}åˆå§‹åŒ–ï¼Œè°ƒç”¨ç¬¬ä¸€ä¸ªæž„é€ å‡½æ•°
+    Widget w3(10,5.0);				//ä½¿ç”¨()åˆå§‹åŒ–ï¼Œè°ƒç”¨ç¬¬äºŒä¸ªæž„é€ å‡½æ•°
+    Widget w4{10,5.0};				//ä½¿ç”¨{}åˆå§‹åŒ–ï¼Œè°ƒç”¨ç¬¬äºŒä¸ªæž„é€ å‡½æ•°
 ```
-ÎÒÃÇÏÖÔÚÒÑ¾­½Ó½üÍê³ÉÌ½Ë÷´óÀ¨ºÅ³õÊ¼»¯ºÍÖØÔØ¹¹Ôìº¯Êý£¬µ«ÊÇÓÐÒ»¸öÓÐÈ¤µÄÇéÐÎÖµµÃÒ»Ìá¡£¼ÙÉèÄãÊ¹ÓÃÒ»¸ö¿ÕµÄ´óÀ¨ºÅ¹¹Ôì¶ÔÏó£¬¶ÔÏóÍ¬Ê±Ö§³Östd::initializer_list×÷Îª²ÎÊýµÄ¹¹Ôìº¯Êý¡£¿ÕµÄ´óÀ¨ºÅ²ÎÊýÖ¸Ê²Ã´ÄØ£¿Èç¹û±íÊ¾¿ÕµÄ²ÎÊý£¬ÄÇÃ´Äã½«µ÷ÓÃÄ¬ÈÏ¹¹Ôìº¯Êý£¬Èç¹û±íÊ¾¿ÕµÄstd::initializer_list£¬ÄÇÃ´µ÷ÓÃÎÞÊµ¼Ê´«Èë²ÎÊýstd::initializer_list¹¹Ôìº¯Êý¡£
-¹æÔòÊÇµ÷ÓÃÄ¬ÈÏ¹¹Ôìº¯Êý¡£¿ÕµÄ´óÀ¨ºÅÒâÎ¶×ÅÎÞ²ÎÊý£¬²¢²»ÊÇ¿ÕµÄstd::initializer_list£º
+æˆ‘ä»¬çŽ°åœ¨å·²ç»æŽ¥è¿‘å®ŒæˆæŽ¢ç´¢{}åˆå§‹åŒ–å’Œé‡è½½æž„é€ å‡½æ•°ï¼Œä½†æ˜¯æœ‰ä¸€ä¸ªæœ‰è¶£çš„æƒ…å½¢å€¼å¾—ä¸€æã€‚å‡è®¾ä½ ä½¿ç”¨ä¸€ä¸ªç©ºçš„{}æž„é€ å¯¹è±¡ï¼Œå¯¹è±¡åŒæ—¶æ”¯æŒstd::initializer_listä½œä¸ºå‚æ•°çš„æž„é€ å‡½æ•°ã€‚ç©ºçš„{}å‚æ•°æŒ‡ä»€ä¹ˆå‘¢ï¼Ÿå¦‚æžœè¡¨ç¤ºç©ºçš„å‚æ•°ï¼Œé‚£ä¹ˆä½ å°†è°ƒç”¨é»˜è®¤æž„é€ å‡½æ•°ï¼Œå¦‚æžœè¡¨ç¤ºç©ºçš„std::initializer_listï¼Œé‚£ä¹ˆè°ƒç”¨æ— å®žé™…ä¼ å…¥å‚æ•°std::initializer_listæž„é€ å‡½æ•°ã€‚
+è§„åˆ™æ˜¯è°ƒç”¨é»˜è®¤æž„é€ å‡½æ•°ã€‚ç©ºçš„{}æ„å‘³ç€æ— å‚æ•°ï¼Œå¹¶ä¸æ˜¯ç©ºçš„std::initializer_listï¼š
 ```
 class Widget{
 public:
-    Widget();					//Ä¬ÈÏ¹¹Ôìº¯Êý
+    Widget();					//é»˜è®¤æž„é€ å‡½æ•°
 
-    Widget(std::initializer_list<init> il);	//std::initializer_list¹¹Ôìº¯Êý
+    Widget(std::initializer_list<init> il);	//std::initializer_listæž„é€ å‡½æ•°
     ...
 };
-Widget w1;					//µ÷ÓÃÄ¬ÈÏ¹¹Ôìº¯Êý
-Widget w2{};					//µ÷ÓÃÄ¬ÈÏ¹¹Ôìº¯Êý
-Widget w3{};					//ÁîÈËÄÕ»ðµÄ½âÎö£¬ÉùÃ÷ÁËÒ»¸öº¯Êý£¡
+Widget w1;					//è°ƒç”¨é»˜è®¤æž„é€ å‡½æ•°
+Widget w2{};					//è°ƒç”¨é»˜è®¤æž„é€ å‡½æ•°
+Widget w3{};					//ä»¤äººæ¼ç«çš„è§£æžï¼Œå£°æ˜Žäº†ä¸€ä¸ªå‡½æ•°ï¼
 ```
-Èç¹ûÄãÏëÊ¹ÓÃ¿ÕµÄinitializer_list²ÎÊýÀ´µ÷ÓÃstd::initializer_list²ÎÊýµÄ¹¹Ôìº¯Êý£¬Äã¿ÉÒÔÊ¹ÓÃ¿ÕµÄ´óÀ¨ºÅ×÷Îª²ÎÊý--°Ñ¿ÕµÄ´óÀ¨ºÅ·ÅÔÚÐ¡À¨ºÅÖ®ÖÐÀ´±ê¶¨Äã´«µÝµÄÄÚÈÝ:
+å¦‚æžœä½ æƒ³ä½¿ç”¨ç©ºçš„initializer_listå‚æ•°æ¥è°ƒç”¨std::initializer_listå‚æ•°çš„æž„é€ å‡½æ•°ï¼Œä½ å¯ä»¥ä½¿ç”¨ç©ºçš„{}ä½œä¸ºå‚æ•°--æŠŠç©ºçš„{}æ”¾åœ¨å°()ä¹‹ä¸­æ¥æ ‡å®šä½ ä¼ é€’çš„å†…å®¹:
 ```
-Widget w4({});					//Ê¹ÓÃ¿ÕÁÐ±í×÷Îª²ÎÊýµ÷ÓÃstd::initializer_listÐÍµÄ¹¹Ôìº¯Êý
-Widget w5({});					//ÈçÉÏ
+Widget w4({});					//ä½¿ç”¨ç©ºåˆ—è¡¨ä½œä¸ºå‚æ•°è°ƒç”¨std::initializer_liståž‹çš„æž„é€ å‡½æ•°
+Widget w5({});					//å¦‚ä¸Š
 ```
-ÔÚÕâÒ»µãÉÏ£¬¿´ËÆÉñÃØµÄ´óÀ¨ºÅ³õÊ¼»¯£¬std::initializer_lists²ÎÊý³õÊ¼»¯£¬ÖØÔØ¹¹Ôìº¯ÊýÝÓÈÆÔÚÄãµÄÄÔº£ÖÐ£¬Äã»òÐí»òºÃÆæÓÐ¶àÉÙµÄÐÅÏ¢Á¿»áÓ°Ïìµ½ÎÒÃÇÆ½Ê±ÈÕ³£µÄ±à³ÌÖÐ¡£Õâ±ÈÄãÏëÏóµÄ¸ü¶à£¬ÒòÎªÆäÖÐÒ»¸ö±»Ö±½ÓÓ°ÏìµÄÀàÊÇstd::vector¡£std::vectorÓÐÒ»¸ö·Çstd::initializer_listµÄ¹¹Ôìº¯ÊýÔÊÐíÄãÖ¸¶¨ÈÝÆ÷µÄ´óÐ¡ÒÔ¼°Ã¿¸öÔªËØµÄ³õÊ¼Öµ£¬Ëü»¹ÓµÓÐÒ»¸östd::initializer_list²ÎÊýµÄ¹¹Ôìº¯ÊýÔÊÐíÄãÖ¸¶¨ÈÝÆ÷µÄ³õÊ¼Öµ¡£Èç¹ûÄã´´½¨Ò»¸öÊýÖµÀàÐÍµÄ(ÀýÈç:std::vector<int>)µÄÈÝÆ÷²¢ÇÒ´«µÝÁ½¸ö²ÎÊý¸ø¹¹Ôìº¯Êý£¬Ê¹ÓÃ´óÀ¨ºÅºÍÐ¡À¨ºÅ´«µÝ²ÎÊý½«»áµ¼ÖÂ·Ç³£Ã÷ÏÔµÄÇø±ð:
+åœ¨è¿™ä¸€ç‚¹ä¸Šï¼Œçœ‹ä¼¼ç¥žç§˜çš„{}åˆå§‹åŒ–ï¼Œstd::initializer_listså‚æ•°åˆå§‹åŒ–ï¼Œé‡è½½æž„é€ å‡½æ•°è¦ç»•åœ¨ä½ çš„è„‘æµ·ä¸­ï¼Œä½ æˆ–è®¸æˆ–å¥½å¥‡æœ‰å¤šå°‘çš„ä¿¡æ¯é‡ä¼šå½±å“åˆ°æˆ‘ä»¬å¹³æ—¶æ—¥å¸¸çš„ç¼–ç¨‹ä¸­ã€‚è¿™æ¯”ä½ æƒ³è±¡çš„æ›´å¤šï¼Œå› ä¸ºå…¶ä¸­ä¸€ä¸ªè¢«ç›´æŽ¥å½±å“çš„ç±»æ˜¯std::vectorã€‚std::vectoræœ‰ä¸€ä¸ªéžstd::initializer_listçš„æž„é€ å‡½æ•°å…è®¸ä½ æŒ‡å®šå®¹å™¨çš„å¤§å°ä»¥åŠæ¯ä¸ªå…ƒç´ çš„åˆå§‹å€¼ï¼Œå®ƒè¿˜æ‹¥æœ‰ä¸€ä¸ªstd::initializer_listå‚æ•°çš„æž„é€ å‡½æ•°å…è®¸ä½ æŒ‡å®šå®¹å™¨çš„åˆå§‹å€¼ã€‚å¦‚æžœä½ åˆ›å»ºä¸€ä¸ªæ•°å€¼ç±»åž‹çš„(ä¾‹å¦‚:std::vector<int>)çš„å®¹å™¨å¹¶ä¸”ä¼ é€’ä¸¤ä¸ªå‚æ•°ç»™æž„é€ å‡½æ•°ï¼Œä½¿ç”¨{}å’Œå°()ä¼ é€’å‚æ•°å°†ä¼šå¯¼è‡´éžå¸¸æ˜Žæ˜¾çš„åŒºåˆ«:
 ```
-std::vector<int> v1(10,20)			//Ê¹ÓÃ·Çstd::initializer_list²ÎÊýµÄ¹¹Ôìº¯Êý£¬½á¹û¹¹ÔìÁË10¸öÔªËØµÄstd::vector¶ÔÏó£¬Ã¿¸ö¶ÔÏóµÄÖµ¶¼ÊÇ20
-std::vector<int> v2{10,20}			//Ê¹ÓÃstd::initializer_list²ÎÊýµÄ¹¹Ôìº¯Êý£¬½á¹û¹¹ÔìÁË2¸öÔªËØµÄstd::vector¶ÔÏó£¬Á½¸öÔªËØ·Ö±ðÊÇ10ºÍ20
+std::vector<int> v1(10,20)			//ä½¿ç”¨éžstd::initializer_listå‚æ•°çš„æž„é€ å‡½æ•°ï¼Œç»“æžœæž„é€ äº†10ä¸ªå…ƒç´ çš„std::vectorå¯¹è±¡ï¼Œæ¯ä¸ªå¯¹è±¡çš„å€¼éƒ½æ˜¯20
+std::vector<int> v2{10,20}			//ä½¿ç”¨std::initializer_listå‚æ•°çš„æž„é€ å‡½æ•°ï¼Œç»“æžœæž„é€ äº†2ä¸ªå…ƒç´ çš„std::vectorå¯¹è±¡ï¼Œä¸¤ä¸ªå…ƒç´ åˆ†åˆ«æ˜¯10å’Œ20
 ```
-ÈÃÎÒÃÇ´ÓÌÖÂÛstd::vector£¬ÒÔ¼°´óÀ¨ºÅ£¬À¨ºÅÒÔ¼°ÖØÔØ¹¹Ôìº¯ÊýµÄÑ¡ÔñÏ¸½ÚÖÐÍÑÀë³öÀ´¡£ÓÐÁãµãÐèÒªÖ¸³ö¡£µÚÒ»£¬×÷ÎªÒ»¸öÀàµÄ×÷Õß£¬ÄãÐèÒªÃ÷°×Èç¹ûÄãÓÐÒ»ÏµÁÐµÄÖØÔØ¹¹Ôìº¯Êý£¬ÆäÖÐ°üÀ¨ÁËÒ»¸ö»ò¶à¸öÒÔstd::initializer_list×÷Îª²ÎÊý£¬¿Í»§¶Ë´úÂëÊ¹ÓÃ´óÀ¨ºÅ³õÊ¼»¯½«Ö»¿´µ½std::initializer_list²ÎÊýÖØÔØ¹¹Ôìº¯Êý¡£Òò´Ë£¬Äã×îºÃÉè¼ÆÄãµÄ¹¹Ôìº¯ÊýÊÇµÄÎÞÂÛ¿Í»§¶Ë´úÂëÊ¹ÓÃ´óÀ¨ºÅ»¹ÊÇÐ¡À¨ºÅ³õÊ¼»¯ÖØÔØ¹¹Ôìº¯ÊýµÄµ÷ÓÃ²»»áÊÜµ½Ó°Ïì¡£»»¾ä»°Ëµ£¬ÔÚÉè¼Æstd::vectorµÄ½Ó¿ÚÖÐÏÖÔÚ¿´ÆðÀ´ÊÇ´íÎóµÄµØ·½´ÓÖÐÑ§Ï°ÓÃÀ´Éè¼Æ×Ô¼ºµÄÀà±ÜÃâÍ¬ÑùµÄ´íÎó¡£
-Ò»¸öÄÚÔÚµÄº¬ÒåÊÇÈç¹ûÄãÓÐÒ»¸öÃ»ÓÐÒÔstd::initializer_list×÷Îª²ÎÊýµÄ¹¹Ôìº¯ÊýµÄÀà£¬ÄãÌí¼ÓÒ»¸ö£¬¿Í»§¶Ë´úÂëÊ¹ÓÃ´óÀ¨ºÅ³õÊ¼»¯Ê±»á´ÓÒÔÇ°±»½âÎö³Éµ÷ÓÃ·Çstd::initializer_listµÄ¹¹Ôìº¯Êý±ä³ÉÏÖÔÚÒ»¸öÐÂµÄº¯Êý¡£µ±È»£¬ÕâÖÖÇé¿öÔÚÄãÌí¼ÓÐÂµÄÖØÔØº¯ÊýÊ±¾­³£·¢Éú£ºº¯Êýµ÷ÓÃ´ÓÖ®Ç°µ÷ÓÃÀÏµÄÖØÔØº¯Êý±ä³ÉÏÖÔÚÐÂµÄº¯Êý¡£std::initializer_list²ÎÊýµÄ¹¹Ôìº¯Êý²»Í¬µÄµØ·½ÔÚÓÚËü²»ÓëÆäËû¹¹Ôìº¯Êý¾ºÕù£¬ËüÊ¹µÃÆäËû¹¹Ôìº¯Êý±äµÃ²»ÔÙ±»µÃµ½µ÷ÓÃ¡£Òò´ËÌí¼ÓÕâÑùµÄÖØÔØº¯ÊýÐèÒª½÷É÷¿¼ÂÇ¡£
-µÚ¶þ¸öÖµµÃÑ§Ï°µÄµØ·½ÊÇ×÷ÎªÒ»¸ö¿Í»§¶ËÀà£¬Äã±ØÐë½÷É÷Ñ¡Ôñ´óÀ¨ºÅ»òÀ¨ºÅ´´½¨¶ÔÏó¡£¾ø´ó²¿ÃÅ¿ª·¢ÕßÑ¡ÔñÊ¹ÓÃ·Ö¸ô·û×÷ÎªÄ¬ÈÏ¹¹Ôìº¯Êý£¬³ý·Ç±ØÒªÊ±²Å»áÑ¡ÔñÆäËû¡£Ê¹ÓÃ´óÀ¨ºÅ³õÊ¼»¯µÄ¿ª·¢Õß±»ËüÃÇ¹ã·ºµÄÊÊÓÃÐÔËùÎüÒý£¬ËüÃÇ½ûÖ¹ÀàÐÍÖµÊÕËõ×ª»»£¬²¢ÇÒÃ»ÓÐc++´ó¶àÊýµÄ¶þÒåÐÔ¡£ÕâÐ©¿ª·¢ÕßÖªµÀÔÚÒ»Ð©Çé¿öÏÂ(ÀýÈç£¬ÔÚ´´½¨std::vectorµÄÊ±ºòÖ¸¶¨´óÐ¡ºÍ³õÊ¼ÔªËØÖµ),ÒªÇóÊ¹ÓÃÐ¡À¨ºÅ¡£ÁíÒ»·½Ãæ£¬Ð¡À¨ºÅ¿ÉÒÔ±»µ±³ÉÄ¬ÈÏµÄ²ÎÊý·Ö¸ô·û¡£ÕâÒ»µãºÍC++98µÄÓïÑÔ´«Í³Ò»ÖÂ£¬±ÜÃâÁËautoÍÆ¶Ïstd::initializer_listµÄÎÊÌâ£¬Ò²ÊÇÎüÒýÈËµÄµØ·½¡£¶ÔÏó´´½¨µÄÊ±ºòµ÷ÓÃ¹¹Ôìº¯Êý²»»á²»¾­ÒâµÄ±»std::initializer_list²ÎÊýÐÍµÄ¹¹Ôìº¯Êý×öÀ¹½Ø¡£ËûÃÇ³ÐÈÏÓÐÊ±ºòÖ»ÓÐ´óÀ¨ºÅÄÜ×ö³õÊ¼»¯(ÀýÈç£¬Ê¹ÓÃÖ¸¶¨µÄÖµ´´½¨ÈÝÆ÷)¡£¹ØÓÚÄÄÖÖ·½Ê½¸üºÃÃ»ÓÐ¹²Ê¶£¬ËùÒÔÎÒµÄ½¨ÒéÊÇÑ¡ÔñÆäÖÐÒ»ÖÖ·½Ê½£¬²¢ÇÒ±£³ÖÒ»ÖÂ¡£
-Èç¹ûÄãÊÇÒ»¸öÄ£¿é×÷Õß£¬Ê¹ÓÃÐ¡À¨ºÅ»¹ÊÇ´óÀ¨ºÅÀ´¹¹Ôì¶ÔÏó´øÀ´µÄ²»°²ÊÇÁîÈË¾ÚÉ¥µÄ£¬ÒòÎª£¬Í¨³£ÎÒÃÇ²¢²»ÖªµÀÄÄÒ»ÖÖ·½Ê½±»ÓÃµ½¡£ÀýÈç£¬¼ÙÉèÄãÏëÊ¹ÓÃÈÎÒâÀàÐÍÈÎÒâÊýÁ¿µÄ²ÎÊý´´½¨Ò»¸ö¶ÔÏó¡£¿É±ä²ÎÊýÀàÄ£¿éÊÇµÄÕâ±äµÃºÜ¼òµ¥:
+è®©æˆ‘ä»¬ä»Žè®¨è®ºstd::vectorï¼Œä»¥åŠ{}ï¼Œ()ä»¥åŠé‡è½½æž„é€ å‡½æ•°çš„é€‰æ‹©ç»†èŠ‚ä¸­è„±ç¦»å‡ºæ¥ã€‚æœ‰é›¶ç‚¹éœ€è¦æŒ‡å‡ºã€‚ç¬¬ä¸€ï¼Œä½œä¸ºä¸€ä¸ªç±»çš„ä½œè€…ï¼Œä½ éœ€è¦æ˜Žç™½å¦‚æžœä½ æœ‰ä¸€ç³»åˆ—çš„é‡è½½æž„é€ å‡½æ•°ï¼Œå…¶ä¸­åŒ…æ‹¬äº†ä¸€ä¸ªæˆ–å¤šä¸ªä»¥std::initializer_listä½œä¸ºå‚æ•°ï¼Œå®¢æˆ·ç«¯ä»£ç ä½¿ç”¨{}åˆå§‹åŒ–å°†åªçœ‹åˆ°std::initializer_listå‚æ•°é‡è½½æž„é€ å‡½æ•°ã€‚å› æ­¤ï¼Œä½ æœ€å¥½è®¾è®¡ä½ çš„æž„é€ å‡½æ•°æ˜¯çš„æ— è®ºå®¢æˆ·ç«¯ä»£ç ä½¿ç”¨{}è¿˜æ˜¯å°()åˆå§‹åŒ–é‡è½½æž„é€ å‡½æ•°çš„è°ƒç”¨ä¸ä¼šå—åˆ°å½±å“ã€‚æ¢å¥è¯è¯´ï¼Œåœ¨è®¾è®¡std::vectorçš„æŽ¥å£ä¸­çŽ°åœ¨çœ‹èµ·æ¥æ˜¯é”™è¯¯çš„åœ°æ–¹ä»Žä¸­å­¦ä¹ ç”¨æ¥è®¾è®¡è‡ªå·±çš„ç±»é¿å…åŒæ ·çš„é”™è¯¯ã€‚
+ä¸€ä¸ªå†…åœ¨çš„å«ä¹‰æ˜¯å¦‚æžœä½ æœ‰ä¸€ä¸ªæ²¡æœ‰ä»¥std::initializer_listä½œä¸ºå‚æ•°çš„æž„é€ å‡½æ•°çš„ç±»ï¼Œä½ æ·»åŠ ä¸€ä¸ªï¼Œå®¢æˆ·ç«¯ä»£ç ä½¿ç”¨{}åˆå§‹åŒ–æ—¶ä¼šä»Žä»¥å‰è¢«è§£æžæˆè°ƒç”¨éžstd::initializer_listçš„æž„é€ å‡½æ•°å˜æˆçŽ°åœ¨ä¸€ä¸ªæ–°çš„å‡½æ•°ã€‚å½“ç„¶ï¼Œè¿™ç§æƒ…å†µåœ¨ä½ æ·»åŠ æ–°çš„é‡è½½å‡½æ•°æ—¶ç»å¸¸å‘ç”Ÿï¼šå‡½æ•°è°ƒç”¨ä»Žä¹‹å‰è°ƒç”¨è€çš„é‡è½½å‡½æ•°å˜æˆçŽ°åœ¨æ–°çš„å‡½æ•°ã€‚std::initializer_listå‚æ•°çš„æž„é€ å‡½æ•°ä¸åŒçš„åœ°æ–¹åœ¨äºŽå®ƒä¸ä¸Žå…¶ä»–æž„é€ å‡½æ•°ç«žäº‰ï¼Œå®ƒä½¿å¾—å…¶ä»–æž„é€ å‡½æ•°å˜å¾—ä¸å†è¢«å¾—åˆ°è°ƒç”¨ã€‚å› æ­¤æ·»åŠ è¿™æ ·çš„é‡è½½å‡½æ•°éœ€è¦è°¨æ…Žè€ƒè™‘ã€‚
+ç¬¬äºŒä¸ªå€¼å¾—å­¦ä¹ çš„åœ°æ–¹æ˜¯ä½œä¸ºä¸€ä¸ªå®¢æˆ·ç«¯ç±»ï¼Œä½ å¿…é¡»è°¨æ…Žé€‰æ‹©{}æˆ–()åˆ›å»ºå¯¹è±¡ã€‚ç»å¤§éƒ¨é—¨å¼€å‘è€…é€‰æ‹©ä½¿ç”¨åˆ†éš”ç¬¦ä½œä¸ºé»˜è®¤æž„é€ å‡½æ•°ï¼Œé™¤éžå¿…è¦æ—¶æ‰ä¼šé€‰æ‹©å…¶ä»–ã€‚ä½¿ç”¨{}åˆå§‹åŒ–çš„å¼€å‘è€…è¢«å®ƒä»¬å¹¿æ³›çš„é€‚ç”¨æ€§æ‰€å¸å¼•ï¼Œå®ƒä»¬ç¦æ­¢ç±»åž‹å€¼æ”¶ç¼©è½¬æ¢ï¼Œå¹¶ä¸”æ²¡æœ‰c++å¤§å¤šæ•°çš„äºŒä¹‰æ€§ã€‚è¿™äº›å¼€å‘è€…çŸ¥é“åœ¨ä¸€äº›æƒ…å†µä¸‹(ä¾‹å¦‚ï¼Œåœ¨åˆ›å»ºstd::vectorçš„æ—¶å€™æŒ‡å®šå¤§å°å’Œåˆå§‹å…ƒç´ å€¼),è¦æ±‚ä½¿ç”¨å°()ã€‚å¦ä¸€æ–¹é¢ï¼Œå°()å¯ä»¥è¢«å½“æˆé»˜è®¤çš„å‚æ•°åˆ†éš”ç¬¦ã€‚è¿™ä¸€ç‚¹å’ŒC++98çš„è¯­è¨€ä¼ ç»Ÿä¸€è‡´ï¼Œé¿å…äº†autoæŽ¨æ–­std::initializer_listçš„é—®é¢˜ï¼Œä¹Ÿæ˜¯å¸å¼•äººçš„åœ°æ–¹ã€‚å¯¹è±¡åˆ›å»ºçš„æ—¶å€™è°ƒç”¨æž„é€ å‡½æ•°ä¸ä¼šä¸ç»æ„çš„è¢«std::initializer_listå‚æ•°åž‹çš„æž„é€ å‡½æ•°åšæ‹¦æˆªã€‚ä»–ä»¬æ‰¿è®¤æœ‰æ—¶å€™åªæœ‰{}èƒ½åšåˆå§‹åŒ–(ä¾‹å¦‚ï¼Œä½¿ç”¨æŒ‡å®šçš„å€¼åˆ›å»ºå®¹å™¨)ã€‚å…³äºŽå“ªç§æ–¹å¼æ›´å¥½æ²¡æœ‰å…±è¯†ï¼Œæ‰€ä»¥æˆ‘çš„å»ºè®®æ˜¯é€‰æ‹©å…¶ä¸­ä¸€ç§æ–¹å¼ï¼Œå¹¶ä¸”ä¿æŒä¸€è‡´ã€‚
+å¦‚æžœä½ æ˜¯ä¸€ä¸ªæ¨¡å—ä½œè€…ï¼Œä½¿ç”¨å°()è¿˜æ˜¯{}æ¥æž„é€ å¯¹è±¡å¸¦æ¥çš„ä¸å®‰æ˜¯ä»¤äººæ²®ä¸§çš„ï¼Œå› ä¸ºï¼Œé€šå¸¸æˆ‘ä»¬å¹¶ä¸çŸ¥é“å“ªä¸€ç§æ–¹å¼è¢«ç”¨åˆ°ã€‚ä¾‹å¦‚ï¼Œå‡è®¾ä½ æƒ³ä½¿ç”¨ä»»æ„ç±»åž‹ä»»æ„æ•°é‡çš„å‚æ•°åˆ›å»ºä¸€ä¸ªå¯¹è±¡ã€‚å¯å˜å‚æ•°ç±»æ¨¡å—æ˜¯çš„è¿™å˜å¾—å¾ˆç®€å•:
 ```
-template<typename T,				//´´½¨¶ÔÏóÀàÐÍ
-	typename... Ts>				//Ê¹ÓÃµÄ²ÎÊýÀàÐÍ
+template<typename T,				//åˆ›å»ºå¯¹è±¡ç±»åž‹
+	typename... Ts>				//ä½¿ç”¨çš„å‚æ•°ç±»åž‹
 void doSomeWork(TS&&... params)
 {
    create local T objcet from params...
    ...
 }
 ```
-ÓÐÁ½ÖÖ·½Ê½¿ÉÒÔÊÇµÄÎ±´úÂë±ä³ÉÕæÊµµÄ´úÂë(²Î¼ûÌõÄ¿25¹ØÓÚstd::forwardËµÃ÷):
+æœ‰ä¸¤ç§æ–¹å¼å¯ä»¥æ˜¯çš„ä¼ªä»£ç å˜æˆçœŸå®žçš„ä»£ç (å‚è§æ¡ç›®25å…³äºŽstd::forwardè¯´æ˜Ž):
 ```
-   T localObject(std::forward<Ts>(params)...);		//Ê¹ÓÃÐ¡À¨ºÅ
-   T localObject{std::forward<Ts>(params)...};		//Ê¹ÓÃ´óÀ¨ºÅ
+   T localObject(std::forward<Ts>(params)...);		//ä½¿ç”¨å°()
+   T localObject{std::forward<Ts>(params)...};		//ä½¿ç”¨{}
 ```
-¿¼ÂÇÈçÏÂµÄµ÷ÓÃ´úÂë:
+è€ƒè™‘å¦‚ä¸‹çš„è°ƒç”¨ä»£ç :
 ```
   std::vector<int> v;
   ...
   doSomeWork<std::vector<int>>(10,20);
 ```
-Èç¹ûdoSomeWorkÊ¹ÓÃÐ¡À¨ºÅ´´½¨localObject,½á¹ûµÃµ½10¸öÔªËØµÄstd::vector¡£Èç¹ûdoSomeWorkµ÷ÓÃ´óÀ¨ºÅ£¬½á¹ûµÃµ½Á½¸öÔªËØµÄstd::vectore¡£ÄÄÒ»ÖÖÊÇ¶ÔµÄÄØ£¿doSomeWorkµÄ×÷Õß²»ÖªµÀ£¬Ö»ÓÐµ÷ÓÃµÄ²ÅÖªµÀ¡£
-Õâ¾ÍÊÇ±ê×¼¿âº¯Êýstd::make_uniqueºÍstd::make_shared(²Î¼ûÌõÄ¿21)ÃæÁÙµÄÎÊÌâ¡£ÕâÐ©º¯ÊýÔÚÄÚ²¿Ê¹ÓÃÐ¡À¨ºÅ²¢ÔÚ½Ó¿ÚÎÄµµÖÐ×¢Ã÷ÒÔ½â¾öÕâ¸öÎÊÌâ¡£
-		ÐèÒª×¢ÒâµÄµØ·½
-*´óÀ¨ºÅ³õÊ¼»¯ÊÇ¹ã·ºÊ¹ÓÃµÄ³õÊ¼»¯Óï·¨£¬Ëü½ûÖ¹ÁËÖµÊÕÕ­µÄÀàÐÍ×ª»»£¬²¢ÇÒ²»»á³öÏÖ´ó¶àÊýC++µÄ¶þÒåÐÔ
-*ÔÚÖØÔØ¹¹Ôìº¯ÊýµÄÑ¡ÔñÖÐ£¬´óÀ¨ºÅ³õÊ¼»¯»á¾¡Á¿È¥std::initializer_listÐÍ²ÎÊýµÄµÄ¹¹Ôìº¯Êý£¬¼´Ê¹ÆäËû¹¹Ôìº¯Êý¿´ÆðÀ´¸üÆ¥Åä
-*Ò»¸öÑ¡Ôñ´óÀ¨ºÅ»¹ÊÇÐ¡À¨ºÅ¾ßÓÐÃ÷ÏÔÇø±ðµÄÀý×ÓÊÇ¹¹Ôì¾ßÓÐÁ½¸ö²ÎÊýµÄÊýÖµÀàÐÍµÄstd::vector
-*ÔÚÄ£¿éÖÐÑ¡Ôñ´óÀ¨ºÅ»¹ÊÇÐ¡À¨ºÅ´´½¨¶ÔÏóºÜ¾ßÓÐÌôÕ½ÐÔ
+å¦‚æžœdoSomeWorkä½¿ç”¨å°()åˆ›å»ºlocalObject,ç»“æžœå¾—åˆ°10ä¸ªå…ƒç´ çš„std::vectorã€‚å¦‚æžœdoSomeWorkè°ƒç”¨{}ï¼Œç»“æžœå¾—åˆ°ä¸¤ä¸ªå…ƒç´ çš„std::vectoreã€‚å“ªä¸€ç§æ˜¯å¯¹çš„å‘¢ï¼ŸdoSomeWorkçš„ä½œè€…ä¸çŸ¥é“ï¼Œåªæœ‰è°ƒç”¨çš„æ‰çŸ¥é“ã€‚
+è¿™å°±æ˜¯æ ‡å‡†åº“å‡½æ•°std::make_uniqueå’Œstd::make_shared(å‚è§æ¡ç›®21)é¢ä¸´çš„é—®é¢˜ã€‚è¿™äº›å‡½æ•°åœ¨å†…éƒ¨ä½¿ç”¨å°()å¹¶åœ¨æŽ¥å£æ–‡æ¡£ä¸­æ³¨æ˜Žä»¥è§£å†³è¿™ä¸ªé—®é¢˜ã€‚
+		éœ€è¦æ³¨æ„çš„åœ°æ–¹
+*{}åˆå§‹åŒ–æ˜¯å¹¿æ³›ä½¿ç”¨çš„åˆå§‹åŒ–è¯­æ³•ï¼Œå®ƒç¦æ­¢äº†å€¼æ”¶çª„çš„ç±»åž‹è½¬æ¢ï¼Œå¹¶ä¸”ä¸ä¼šå‡ºçŽ°å¤§å¤šæ•°C++çš„äºŒä¹‰æ€§
+*åœ¨é‡è½½æž„é€ å‡½æ•°çš„é€‰æ‹©ä¸­ï¼Œ{}åˆå§‹åŒ–ä¼šå°½é‡åŽ»std::initializer_liståž‹å‚æ•°çš„çš„æž„é€ å‡½æ•°ï¼Œå³ä½¿å…¶ä»–æž„é€ å‡½æ•°çœ‹èµ·æ¥æ›´åŒ¹é…
+*ä¸€ä¸ªé€‰æ‹©{}è¿˜æ˜¯å°()å…·æœ‰æ˜Žæ˜¾åŒºåˆ«çš„ä¾‹å­æ˜¯æž„é€ å…·æœ‰ä¸¤ä¸ªå‚æ•°çš„æ•°å€¼ç±»åž‹çš„std::vector
+*åœ¨æ¨¡å—ä¸­é€‰æ‹©{}è¿˜æ˜¯å°()åˆ›å»ºå¯¹è±¡å¾ˆå…·æœ‰æŒ‘æˆ˜æ€§
