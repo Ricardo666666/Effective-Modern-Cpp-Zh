@@ -50,7 +50,7 @@ TD<decltype(y)> yType;                  // 包含了x和y的类型
 
 ###运行时输出
 
-`printf`到运行的时候可以用来显示类型信息（这并不是我推荐你使用`printf`的原因），但是它提供了对输出格式的完全掌控。挑战就在于你要创造一个你关心的对象的输出的格式控制展示的textual。“这还不容易，”你会这样想，“就是用`typeid`和`std::type_info::name`来救场啊。”在后续的对`x`和`y`的类型推导中，你可以发现你可以这样写：
+`printf`可以输出runtime的类型信息（这并不是我推荐你使用`printf`的原因），它提供了对输出格式的完全掌控。难点在于，你要创造一个你关心的对象的输出的格式控制展示的textual。“这还不容易，”你会这样想，“就是用`typeid`和`std::type_info::name`来救场啊。”在后续的对`x`和`y`的类型推导中，你可以发现你可以这样写：
 
 ```cpp
 std::cout << typeid(x).name() << '\n'; // display types for
